@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>admin page</title>
+<linkrel="stylesheet" href="style.css">
+</linked>
+</head>
+<body>
+   <div class="container">
+    <h1>Admin page</h1>
+<?php 
+    if(isset($_SESSION['message']))
+{
+?>
+<div class="msg-box">
+    <p>
+        <?php
+        echo $_SESSION['message'];
+        ?>
+    </p>
+</div>
+<?php
+}
+?>
+   <!-- rest of admin page content-->
+</div>
+</body>
+</html>
