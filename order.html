@@ -1,24 +1,108 @@
-<html>
-    <head>
-        <title>schedule a shoot</title>
-        <link rel="stylesheet" href="order.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
-    </head>
-    <body>
-        <header>
-            <h2>Schedule a shoot</h2>
-                
-                 <form action="contact.php" method="post">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name"><br><br>
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email"><br><br>
-                    <label for="phone_number">Phone Number:</label>
-                    <input type="text" id="phone_number" name="phone_number"><br><br>
-                    <label for="message">Message:</label>
-                    <textarea id="message" name="message"></textarea><br><br>
-                    <input type="submit" value="Submit">
-                  </form>  
-                  
-    </body>
-    </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule a Shoot - RK Studio</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Admin Theme -->
+    <link rel="stylesheet" href="admin-theme.css">
+</head>
+<body>
+
+<!-- Header -->
+<header class="admin-header">
+    <div class="container">
+        <a href="index.html" class="admin-logo">
+            <img src="assets/images/logo10.png" alt="RK Studio" onerror="this.style.display='none'">
+            <span class="admin-logo-text">RK <span>Studio</span></span>
+        </a>
+        <nav class="admin-nav">
+            <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            <a href="products.php"><i class="fas fa-images"></i> Gallery</a>
+            <a href="order.html" class="active"><i class="fas fa-camera"></i> Book Shoot</a>
+            <a href="service.html"><i class="fas fa-concierge-bell"></i> Services</a>
+            <a href="login_form.php"><i class="fas fa-sign-in-alt"></i> Login</a>
+        </nav>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="admin-container">
+    
+    <!-- Page Title -->
+    <div class="page-title">
+        <h1><i class="fas fa-calendar-plus"></i> Schedule a <span>Shoot</span></h1>
+        <p>Book your photography session with RK Studio</p>
+    </div>
+
+    <!-- Booking Form -->
+    <div class="admin-form-card">
+        <h2><i class="fas fa-camera-retro"></i> Book Your <span>Session</span></h2>
+        <form action="contact.php" method="post">
+            <div class="form-group">
+                <label for="name"><i class="fas fa-user"></i> Full Name</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="Enter your full name" required>
+            </div>
+            <div class="form-group">
+                <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email address" required>
+            </div>
+            <div class="form-group">
+                <label for="phone_number"><i class="fas fa-phone"></i> Phone Number</label>
+                <input type="text" id="phone_number" name="phone_number" class="form-control" placeholder="Enter your phone number" required>
+            </div>
+            <div class="form-group">
+                <label for="message"><i class="fas fa-comment"></i> Your Message</label>
+                <textarea id="message" name="message" class="form-control" rows="5" placeholder="Tell us about your photography needs (event type, date, location, etc.)" required></textarea>
+            </div>
+            <button type="submit" class="btn-primary btn-block">
+                <i class="fas fa-paper-plane"></i> Submit Booking Request
+            </button>
+        </form>
+        
+        <!-- WhatsApp Quick Contact -->
+        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+            <p style="color: var(--text-muted); margin-bottom: 1rem;"><i class="fas fa-bolt"></i> Prefer instant messaging?</p>
+            <a href="https://wa.me/919894596141?text=Hi%20RK%20Studio!%20I%20want%20to%20book%20a%20photography%20session." 
+               target="_blank" 
+               style="display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: white; padding: 12px 25px; border-radius: 30px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">
+                <i class="fab fa-whatsapp" style="font-size: 1.3rem;"></i> Chat on WhatsApp
+            </a>
+        </div>
+    </div>
+
+    <!-- Info Cards -->
+    <div class="dashboard-grid" style="margin-top: 3rem;">
+        <div class="dashboard-card" style="cursor: default;">
+            <div class="dashboard-card-icon">
+                <i class="fas fa-ring"></i>
+            </div>
+            <h3 class="dashboard-card-title">Wedding Photography</h3>
+            <p class="dashboard-card-description">Capture your special day with our professional wedding photography</p>
+        </div>
+        
+        <div class="dashboard-card" style="cursor: default;">
+            <div class="dashboard-card-icon">
+                <i class="fas fa-baby"></i>
+            </div>
+            <h3 class="dashboard-card-title">Baby Photography</h3>
+            <p class="dashboard-card-description">Precious moments of your little ones preserved forever</p>
+        </div>
+        
+        <div class="dashboard-card" style="cursor: default;">
+            <div class="dashboard-card-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3 class="dashboard-card-title">Event Photography</h3>
+            <p class="dashboard-card-description">Corporate events, parties, and special occasions</p>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
