@@ -10,6 +10,65 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Admin Theme -->
     <link rel="stylesheet" href="admin-theme.css">
+    <style>
+        /* Selected Package Display */
+        .selected-package-card {
+            background: linear-gradient(135deg, rgba(212, 168, 75, 0.1) 0%, rgba(184, 146, 63, 0.05) 100%);
+            border: 2px solid #d4a84b;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            display: none;
+        }
+        .selected-package-card.active {
+            display: block;
+            animation: slideDown 0.5s ease;
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .selected-package-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .selected-package-header h3 {
+            color: #d4a84b;
+            font-size: 1.2rem;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .selected-package-header .change-btn {
+            color: #d4a84b;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .selected-package-header .change-btn:hover {
+            color: #fff;
+        }
+        .selected-package-details {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .package-name-display {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        .package-price-display {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #d4a84b;
+        }
+    </style>
 </head>
 <body>
 
@@ -41,8 +100,22 @@
 
     <!-- Booking Form -->
     <div class="admin-form-card">
+        
+        <!-- Selected Package Display -->
+        <div class="selected-package-card" id="selectedPackageCard">
+            <div class="selected-package-header">
+                <h3><i class="fas fa-check-circle"></i> Selected Package</h3>
+                <a href="offers.html" class="change-btn"><i class="fas fa-exchange-alt"></i> Change Package</a>
+            </div>
+            <div class="selected-package-details">
+                <span class="package-name-display" id="packageNameDisplay"></span>
+                <span class="package-price-display" id="packagePriceDisplay"></span>
+            </div>
+        </div>
+        
         <h2><i class="fas fa-camera-retro"></i> Book Your <span>Session</span></h2>
         <form action="contact.php" method="post">
+            <input type="hidden" id="selectedPackage" name="selected_package" value="">
             <div class="form-group">
                 <label for="name"><i class="fas fa-user"></i> Full Name</label>
                 <input type="text" id="name" name="name" class="form-control" placeholder="Enter your full name" required>
@@ -69,6 +142,7 @@
             <p style="color: var(--text-muted); margin-bottom: 1rem;"><i class="fas fa-bolt"></i> Prefer instant messaging?</p>
             <a href="https://wa.me/919894596141?text=Hi%20RK%20Studio!%20I%20want%20to%20book%20a%20photography%20session." 
                target="_blank" 
+               id="whatsappLink"
                style="display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: white; padding: 12px 25px; border-radius: 30px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">
                 <i class="fab fa-whatsapp" style="font-size: 1.3rem;"></i> Chat on WhatsApp
             </a>
@@ -103,6 +177,36 @@
     </div>
 
 </div>
+
+<script>
+    // Parse URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const packageName = urlParams.get('package');
+    const packagePrice = urlParams.get('price');
+    
+    if (packageName) {
+        // Show selected package card
+        const packageCard = document.getElementById('selectedPackageCard');
+        const nameDisplay = document.getElementById('packageNameDisplay');
+        const priceDisplay = document.getElementById('packagePriceDisplay');
+        const hiddenInput = document.getElementById('selectedPackage');
+        const messageField = document.getElementById('message');
+        const whatsappLink = document.getElementById('whatsappLink');
+        
+        packageCard.classList.add('active');
+        nameDisplay.textContent = packageName;
+        priceDisplay.textContent = packagePrice || '';
+        hiddenInput.value = packageName + (packagePrice ? ' - ' + packagePrice : '');
+        
+        // Pre-fill message with package info
+        messageField.placeholder = `I'm interested in the ${packageName}${packagePrice ? ' (' + packagePrice + ')' : ''}. Please provide more details about event date, location, and requirements.`;
+        messageField.value = `I would like to book the ${packageName}${packagePrice ? ' (' + packagePrice + ')' : ''}.\n\nEvent Details:\n- Event Type: \n- Date: \n- Location: \n- Additional Requirements: `;
+        
+        // Update WhatsApp link with package info
+        const whatsappMsg = encodeURIComponent(`Hi RK Studio! I'm interested in the ${packageName}${packagePrice ? ' (' + packagePrice + ')' : ''}. Please share more details.`);
+        whatsappLink.href = `https://wa.me/919842047017?text=${whatsappMsg}`;
+    }
+</script>
 
 </body>
 </html>
