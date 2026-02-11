@@ -9,9 +9,25 @@ if(!isset($_SESSION['admin_name'])){
    exit();
 }
 
+// Create portfolio table if not exists
+$create_portfolio = "CREATE TABLE IF NOT EXISTS portfolio (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    category VARCHAR(100) NOT NULL,
+    description TEXT,
+    image VARCHAR(255) NOT NULL,
+    featured TINYINT(1) DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)";
+@mysqli_query($conn, $create_portfolio);
+
 // Get photo count from gallery database
 $photo_result = @mysqli_query($conn, "SELECT COUNT(*) as count FROM photo");
 $photo_count = $photo_result ? (mysqli_fetch_assoc($photo_result)['count'] ?? 0) : 0;
+
+// Get portfolio count
+$portfolio_result = @mysqli_query($conn, "SELECT COUNT(*) as count FROM portfolio");
+$portfolio_count = $portfolio_result ? (mysqli_fetch_assoc($portfolio_result)['count'] ?? 0) : 0;
 
 // Get message count from studio database
 $studio_conn = new mysqli('localhost', 'root', '', 'studio');
@@ -50,6 +66,7 @@ if (!$studio_conn->connect_error) {
         </a>
         <nav class="admin-nav">
             <a href="admin_page.php" class="active"><i class="fas fa-home"></i> Dashboard</a>
+            <a href="portfolio.php"><i class="fas fa-briefcase"></i> Portfolio</a>
             <a href="admin.php"><i class="fas fa-plus-circle"></i> Add Photos</a>
             <a href="products.php"><i class="fas fa-images"></i> View Photos</a>
             <a href="ad.php"><i class="fas fa-calendar-check"></i> Bookings</a>
@@ -77,6 +94,10 @@ if (!$studio_conn->connect_error) {
             <div class="stat-label">Total Photos</div>
         </div>
         <div class="stat-card">
+            <div class="stat-number"><?php echo $portfolio_count; ?></div>
+            <div class="stat-label">Portfolio Items</div>
+        </div>
+        <div class="stat-card">
             <div class="stat-number"><?php echo $message_count; ?></div>
             <div class="stat-label">Bookings</div>
         </div>
@@ -88,6 +109,14 @@ if (!$studio_conn->connect_error) {
 
     <!-- Dashboard Grid -->
     <div class="dashboard-grid">
+        <a href="portfolio.php" class="dashboard-card">
+            <div class="dashboard-card-icon">
+                <i class="fas fa-briefcase"></i>
+            </div>
+            <h3 class="dashboard-card-title">Portfolio</h3>
+            <p class="dashboard-card-description">Manage your portfolio showcase with categories</p>
+        </a>
+        
         <a href="admin.php" class="dashboard-card">
             <div class="dashboard-card-icon">
                 <i class="fas fa-camera"></i>

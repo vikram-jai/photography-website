@@ -22,6 +22,7 @@
         </a>
         <nav class="admin-nav">
             <a href="admin_page.php"><i class="fas fa-home"></i> Dashboard</a>
+            <a href="portfolio.php"><i class="fas fa-briefcase"></i> Portfolio</a>
             <a href="admin.php"><i class="fas fa-plus-circle"></i> Add Photos</a>
             <a href="products.php"><i class="fas fa-images"></i> View Photos</a>
             <a href="ad.php" class="active"><i class="fas fa-calendar-check"></i> Bookings</a>

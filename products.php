@@ -33,6 +33,7 @@ $user_display_name = $is_admin ? $_SESSION['admin_name'] : ($is_user ? $_SESSION
             <?php if($is_admin): ?>
                 <!-- Admin Navigation -->
                 <a href="admin_page.php"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="portfolio.php"><i class="fas fa-briefcase"></i> Portfolio</a>
                 <a href="admin.php"><i class="fas fa-plus-circle"></i> Add Photos</a>
                 <a href="products.php" class="active"><i class="fas fa-images"></i> View Photos</a>
                 <a href="ad.php"><i class="fas fa-calendar-check"></i> Bookings</a>
