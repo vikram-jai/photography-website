@@ -70,7 +70,7 @@ if (!$studio_conn->connect_error) {
             <a href="admin.php"><i class="fas fa-plus-circle"></i> Add Photos</a>
             <a href="products.php"><i class="fas fa-images"></i> View Photos</a>
             <a href="ad.php"><i class="fas fa-calendar-check"></i> Bookings</a>
-            <a href="index.html"><i class="fas fa-globe"></i> Website</a>
+            <a href="index.php"><i class="fas fa-globe"></i> Website</a>
             <a href="logout.php" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </nav>
     </div>
@@ -141,7 +141,7 @@ if (!$studio_conn->connect_error) {
             <p class="dashboard-card-description">Check client messages and booking requests</p>
         </a>
         
-        <a href="index.html" class="dashboard-card">
+        <a href="index.php" class="dashboard-card">
             <div class="dashboard-card-icon">
                 <i class="fas fa-globe"></i>
             </div>

@@ -37,18 +37,18 @@ $user_display_name = $is_admin ? $_SESSION['admin_name'] : ($is_user ? $_SESSION
                 <a href="admin.php"><i class="fas fa-plus-circle"></i> Add Photos</a>
                 <a href="products.php" class="active"><i class="fas fa-images"></i> View Photos</a>
                 <a href="ad.php"><i class="fas fa-calendar-check"></i> Bookings</a>
-                <a href="index.html"><i class="fas fa-globe"></i> Website</a>
+                <a href="index.php"><i class="fas fa-globe"></i> Website</a>
                 <a href="logout.php" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
             <?php elseif($is_user): ?>
                 <!-- User Navigation -->
                 <a href="user_page.php"><i class="fas fa-home"></i> Dashboard</a>
                 <a href="products.php" class="active"><i class="fas fa-images"></i> Gallery</a>
                 <a href="order.html"><i class="fas fa-camera"></i> Book Shoot</a>
-                <a href="index.html"><i class="fas fa-globe"></i> Website</a>
+                <a href="index.php"><i class="fas fa-globe"></i> Website</a>
                 <a href="logout.php" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
             <?php else: ?>
                 <!-- Guest Navigation -->
-                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="index.php"><i class="fas fa-home"></i> Home</a>
                 <a href="products.php" class="active"><i class="fas fa-images"></i> Gallery</a>
                 <a href="order.html"><i class="fas fa-camera"></i> Book Shoot</a>
                 <a href="login_form.php"><i class="fas fa-sign-in-alt"></i> Login</a>

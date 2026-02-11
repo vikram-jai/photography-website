@@ -174,7 +174,7 @@ if(isset($_POST['submit'])){
         </form>
         
         <p class="auth-footer">Don't have an account? <a href="register_form.php">Register Now</a></p>
-        <p class="auth-footer" style="margin-top: 0.5rem;"><a href="index.html"><i class="fas fa-home"></i> Back to Home</a></p>
+        <p class="auth-footer" style="margin-top: 0.5rem;"><a href="index.php"><i class="fas fa-home"></i> Back to Home</a></p>
     </div>
 </div>
 

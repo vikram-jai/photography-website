@@ -26,7 +26,7 @@
             <a href="admin.php"><i class="fas fa-plus-circle"></i> Add Photos</a>
             <a href="products.php"><i class="fas fa-images"></i> View Photos</a>
             <a href="ad.php" class="active"><i class="fas fa-calendar-check"></i> Bookings</a>
-            <a href="index.html"><i class="fas fa-globe"></i> Website</a>
+            <a href="index.php"><i class="fas fa-globe"></i> Website</a>
             <a href="logout.php" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </nav>
     </div>
