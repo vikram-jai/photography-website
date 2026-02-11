@@ -1,0 +1,10 @@
+{
+  "liveServer.settings.proxy": {
+    "enable": true,
+    "baseUri": "/",
+    "proxyUri": "http://localhost/photography-website"
+  },
+  "liveServer.settings.root": "/",
+  "liveServer.settings.CustomBrowser": "chrome",
+  "liveServer.settings.AdvanceCustomBrowserCmdLine": "chrome --new-window http://localhost/photography-website/index.html"
+}
