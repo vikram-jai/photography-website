@@ -33,7 +33,7 @@ $photo_count = $photo_result ? (mysqli_fetch_assoc($photo_result)['count'] ?? 0)
 <!-- User Header -->
 <header class="admin-header">
     <div class="container">
-        <a href="index.html" class="admin-logo">
+        <a href="index.php" class="admin-logo">
             <img src="assets/images/logo10.png" alt="RK Studio" onerror="this.style.display='none'">
             <span class="admin-logo-text">RK <span>Studio</span></span>
         </a>
@@ -41,7 +41,7 @@ $photo_count = $photo_result ? (mysqli_fetch_assoc($photo_result)['count'] ?? 0)
             <a href="user_page.php" class="active"><i class="fas fa-home"></i> Dashboard</a>
             <a href="products.php"><i class="fas fa-images"></i> Gallery</a>
             <a href="order.html"><i class="fas fa-camera"></i> Book Shoot</a>
-            <a href="index.html"><i class="fas fa-globe"></i> Website</a>
+            <a href="index.php"><i class="fas fa-globe"></i> Website</a>
             <a href="logout.php" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </nav>
     </div>
@@ -116,7 +116,7 @@ $photo_count = $photo_result ? (mysqli_fetch_assoc($photo_result)['count'] ?? 0)
             <p class="dashboard-card-description">Premium photo frames collection</p>
         </a>
         
-        <a href="index.html" class="dashboard-card">
+        <a href="index.php" class="dashboard-card">
             <div class="dashboard-card-icon">
                 <i class="fas fa-globe"></i>
             </div>

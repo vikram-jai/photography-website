@@ -253,7 +253,7 @@ $whatsapp_message = urlencode("Hi RK Studio! I just submitted a booking request.
             <a href="order.html" class="btn-secondary">
                 <i class="fas fa-arrow-left"></i> Book Again
             </a>
-            <a href="index.html" class="btn-primary">
+            <a href="index.php" class="btn-primary">
                 <i class="fas fa-home"></i> Go Home
             </a>
         </div>

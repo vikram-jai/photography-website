@@ -401,7 +401,7 @@ if($categories_query) {
                                 <li><a href="about.html">About</a></li>
                                 <li><a href="service.html">Services</a></li>
                                 <li><a href="portfolio-gallery.php" class="active">Portfolio</a></li>
-                                <li><a href="Gallery.html">Gallery</a></li>
+                                <li><a href="Gallery.php">Gallery</a></li>
                                 <li><a href="contact.html">Contact</a></li>
                             </ul>
                         </nav>
