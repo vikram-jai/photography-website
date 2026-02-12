@@ -1252,7 +1252,7 @@ if($banner_query && mysqli_num_rows($banner_query) > 0){
                         <nav id="mobile-menu" class="main-menu">
                             <ul class="onepage-menu">
                                 <li><a href="index.php">Home</a></li>
-                                <li><a href="#homeabout">About</a></li>
+                                <li><a href="about.html">About</a></li>
                                 <li><a href="service.html">Services</a></li>
                                 <li><a href="#homeportfolio">Portfolio</a></li>
                                 <li><a href="Gallery.php">Gallery</a></li>
@@ -1888,10 +1888,10 @@ if($banner_query && mysqli_num_rows($banner_query) > 0){
                         <h5>Quick Links</h5>
                         <ul class="footer-links">
                             <li><a href="index.php"><i class="ri-arrow-right-s-line"></i> Home</a></li>
-                            <li><a href="#homeabout"><i class="ri-arrow-right-s-line"></i> About Us</a></li>
+                            <li><a href="about.html"><i class="ri-arrow-right-s-line"></i> About Us</a></li>
                             <li><a href="service.html"><i class="ri-arrow-right-s-line"></i> Services</a></li>
                             <li><a href="Gallery.php"><i class="ri-arrow-right-s-line"></i> Gallery</a></li>
-                            <li><a href="#homecontact"><i class="ri-arrow-right-s-line"></i> Contact</a></li>
+                            <li><a href="contact.html"><i class="ri-arrow-right-s-line"></i> Contact</a></li>
                         </ul>
                     </div>
                 </div>

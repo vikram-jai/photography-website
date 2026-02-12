@@ -1,48 +1,935 @@
-<!doctype html>
-<html class="no-js" lang="zxx">
+﻿<!doctype html>
+<html class="no-js" lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>About</title>
-    <meta name="description" content="">
+    <title>About Us - RK Studio Photography</title>
+    <meta name="description" content="Learn about RK Studio Photography - 15 years of professional wedding, event, and portrait photography experience">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png">
+    <!-- CSS here -->
     <link rel="stylesheet" href="assets/css/vendor/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/vendor/animate.min.css">
     <link rel="stylesheet" href="assets/css/plugins/swiper.min.css">
-    <link rel="stylesheet" href="assets/css/plugins/nice-select.css">
     <link rel="stylesheet" href="assets/css/vendor/magnific-popup.css">
     <link rel="stylesheet" href="assets/css/vendor/fontawesome-pro.css">
     <link rel="stylesheet" href="assets/css/vendor/spacing.css">
     <link rel="stylesheet" href="assets/css/vendor/remixicon.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --gold: #d4a84b;
+            --gold-dark: #b8923f;
+            --gold-light: #e6c477;
+            --dark-bg: #0f0f0f;
+            --darker-bg: #0a0a0a;
+            --card-bg: #1a1a1a;
+            --card-bg-hover: #252525;
+            --border-color: #2a2a2a;
+            --text-muted: rgba(255,255,255,0.7);
+            --gradient-gold: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+        }
+        
+        html { scroll-behavior: smooth; }
+        body { background: var(--dark-bg); color: #fff; }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--dark-bg); }
+        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--gold-dark); }
+        
+        /* Header Enhancement */
+        .rs-header-area {
+            background: rgba(15, 15, 15, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .rs-header-area.header-sticky {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .main-menu ul li a {
+            color: #fff !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .main-menu ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+        .main-menu ul li a:hover::after,
+        .main-menu ul li.active a::after {
+            width: 100%;
+        }
+        .main-menu ul li a:hover,
+        .main-menu ul li.active a {
+            color: var(--gold) !important;
+        }
+        .rs-btn.has-theme-yellow {
+            background: var(--gradient-gold) !important;
+            color: #0f0f0f !important;
+            font-weight: 600;
+            border-radius: 30px !important;
+            padding: 12px 28px !important;
+            transition: all 0.3s ease;
+            border: none !important;
+            position: relative;
+            overflow: hidden;
+        }
+        .rs-btn.has-theme-yellow:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 168, 75, 0.4);
+        }
+        .btn-equal {
+            background: transparent !important;
+            border: 2px solid var(--gold) !important;
+            color: var(--gold) !important;
+            border-radius: 25px !important;
+            padding: 8px 25px !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .btn-equal:hover {
+            background: var(--gold) !important;
+            color: #0f0f0f !important;
+        }
+
+        /* Hero Banner */
+        .about-hero {
+            position: relative;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(15,15,15,0.95) 0%, rgba(26,26,26,0.95) 100%),
+                        url('assets/images/bg/breadcrumb-bg-dark-01.png') center/cover;
+            overflow: hidden;
+            padding: 150px 0 100px;
+        }
+        .about-hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(212, 168, 75, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .about-hero-content {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        .about-hero-subtitle {
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: inline-block;
+            position: relative;
+        }
+        .about-hero-subtitle::before,
+        .about-hero-subtitle::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 50px;
+            height: 2px;
+            background: var(--gold);
+        }
+        .about-hero-subtitle::before { left: -70px; }
+        .about-hero-subtitle::after { right: -70px; }
+        .about-hero-title {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 25px;
+            line-height: 1.2;
+        }
+        .about-hero-title span {
+            color: var(--gold);
+        }
+        .about-hero-desc {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            max-width: 650px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+        }
+        .breadcrumb-nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        .breadcrumb-nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .breadcrumb-nav a:hover { color: var(--gold); }
+        .breadcrumb-nav span { color: var(--gold); }
+        .breadcrumb-separator { color: var(--gold); }
+
+        /* About Section */
+        .about-section {
+            padding: 120px 0;
+            background: var(--dark-bg);
+            position: relative;
+        }
+        .about-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+        .about-image-wrapper {
+            position: relative;
+        }
+        .about-main-image {
+            border-radius: 20px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            border: 3px solid var(--border-color);
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+        .about-experience-badge {
+            position: absolute;
+            bottom: -30px;
+            right: -30px;
+            background: var(--gradient-gold);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(212, 168, 75, 0.3);
+        }
+        .experience-number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #0f0f0f;
+            line-height: 1;
+        }
+        .experience-text {
+            color: #0f0f0f;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .about-content {
+            padding-left: 30px;
+        }
+        .section-subtitle {
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-subtitle::before {
+            content: '';
+            width: 40px;
+            height: 2px;
+            background: var(--gold);
+        }
+        .section-title {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 25px;
+            line-height: 1.2;
+        }
+        .section-title span {
+            color: var(--gold);
+        }
+        .about-description {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.9;
+            margin-bottom: 30px;
+        }
+        .about-features-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 35px 0;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .about-features-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #fff;
+            font-weight: 500;
+        }
+        .about-features-list li i {
+            color: var(--gold);
+            font-size: 18px;
+        }
+        .about-signature {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .signature-info h5 {
+            color: #fff;
+            margin: 0;
+            font-size: 1.2rem;
+        }
+        .signature-info span {
+            color: var(--gold);
+            font-size: 0.9rem;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            padding: 80px 0;
+            position: relative;
+        }
+        .stats-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('assets/images/bg/banner-bg-10.png') center/cover;
+            opacity: 0.1;
+        }
+        .stat-item {
+            text-align: center;
+            padding: 30px 20px;
+            position: relative;
+        }
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 24px;
+            color: #0f0f0f;
+        }
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #0f0f0f;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+        .stat-label {
+            color: rgba(0,0,0,0.7);
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Services Section */
+        .services-section {
+            padding: 120px 0;
+            background: var(--darker-bg);
+            position: relative;
+        }
+        .services-section::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+        .service-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+        }
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-gold);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+        .service-card:hover {
+            transform: translateY(-10px);
+            background: var(--card-bg-hover);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            font-size: 32px;
+            color: #0f0f0f;
+            transition: all 0.3s ease;
+        }
+        .service-card:hover .service-icon {
+            transform: scale(1.1) rotate(10deg);
+        }
+        .service-card h4 {
+            color: #fff;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* Timeline Section */
+        .timeline-section {
+            padding: 120px 0;
+            background: var(--dark-bg);
+            position: relative;
+        }
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: var(--border-color);
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 50px;
+            display: flex;
+            align-items: center;
+        }
+        .timeline-item:nth-child(odd) {
+            flex-direction: row-reverse;
+            text-align: right;
+        }
+        .timeline-item:nth-child(odd) .timeline-content {
+            padding-left: 0;
+            padding-right: 50px;
+        }
+        .timeline-item:nth-child(even) .timeline-content {
+            padding-left: 50px;
+        }
+        .timeline-point {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--gold);
+            border-radius: 50%;
+            border: 4px solid var(--dark-bg);
+            z-index: 2;
+        }
+        .timeline-content {
+            flex: 1;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+        .timeline-content:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+        }
+        .timeline-year {
+            color: var(--gold);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .timeline-title {
+            color: #fff;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+        .timeline-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* Team Section */
+        .team-section {
+            padding: 120px 0;
+            background: var(--darker-bg);
+        }
+        .team-card {
+            background: var(--card-bg);
+            border-radius: 25px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: all 0.4s ease;
+        }
+        .team-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-10px);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+        }
+        .team-image {
+            position: relative;
+            overflow: hidden;
+        }
+        .team-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .team-card:hover .team-image img {
+            transform: scale(1.1);
+        }
+        .team-content {
+            padding: 35px;
+            text-align: center;
+        }
+        .team-content h4 {
+            color: #fff;
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+        }
+        .team-content .position {
+            color: var(--gold);
+            font-size: 1rem;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        .team-content p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+        .team-social {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        .team-social a {
+            width: 45px;
+            height: 45px;
+            background: var(--dark-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+        .team-social a:hover {
+            background: var(--gold);
+            color: #0f0f0f;
+            border-color: var(--gold);
+        }
+
+        /* Testimonials Section */
+        .testimonials-section {
+            padding: 120px 0;
+            background: var(--dark-bg);
+        }
+        .testimonial-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid var(--border-color);
+            height: 100%;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 100px;
+            color: var(--gold);
+            opacity: 0.1;
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+        .testimonial-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+        }
+        .testimonial-stars {
+            color: var(--gold);
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        .testimonial-text {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.9;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .testimonial-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--gold);
+        }
+        .testimonial-info h6 {
+            color: #fff;
+            margin: 0 0 5px 0;
+            font-size: 1.1rem;
+        }
+        .testimonial-info span {
+            color: var(--gold);
+            font-size: 0.9rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 120px 0;
+            background: linear-gradient(135deg, rgba(15,15,15,0.95) 0%, rgba(26,26,26,0.95) 100%),
+                        url('assets/images/bg/cta-bg-01.png') center/cover;
+            position: relative;
+        }
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(212, 168, 75, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .cta-content {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        .cta-content h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+        .cta-content p {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+        }
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .cta-btn-primary {
+            background: var(--gradient-gold);
+            color: #0f0f0f !important;
+            padding: 18px 45px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .cta-btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(212, 168, 75, 0.4);
+            color: #0f0f0f;
+        }
+        .cta-btn-secondary {
+            background: transparent;
+            border: 2px solid #fff;
+            color: #fff !important;
+            padding: 16px 45px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .cta-btn-secondary:hover {
+            background: #fff;
+            color: #0f0f0f !important;
+        }
+
+        /* Footer */
+        .footer-section {
+            background: #0a0a0a;
+            padding: 80px 0 30px;
+            border-top: 1px solid var(--border-color);
+        }
+        .footer-logo {
+            max-height: 60px;
+            margin-bottom: 25px;
+        }
+        .footer-desc {
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+        .footer-social {
+            display: flex;
+            gap: 12px;
+        }
+        .footer-social a {
+            width: 45px;
+            height: 45px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+        .footer-social a:hover {
+            background: var(--gold);
+            color: #0f0f0f;
+            border-color: var(--gold);
+            transform: translateY(-3px);
+        }
+        .footer-title {
+            color: #fff;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--gold);
+        }
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        .footer-links li a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .footer-links li a:hover {
+            color: var(--gold);
+            padding-left: 5px;
+        }
+        .footer-links li a i {
+            font-size: 10px;
+            color: var(--gold);
+        }
+        .footer-contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .footer-contact-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--card-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            flex-shrink: 0;
+        }
+        .footer-contact-text {
+            color: var(--text-muted);
+        }
+        .footer-contact-text a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .footer-contact-text a:hover {
+            color: var(--gold);
+        }
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 30px;
+            margin-top: 50px;
+            text-align: center;
+        }
+        .footer-bottom p {
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        /* WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 30px;
+            box-shadow: 0 5px 25px rgba(37, 211, 102, 0.4);
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            color: #fff;
+        }
+
+        /* Back to Top */
+        .backtotop-wrap {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .backtotop-wrap.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .backtotop-wrap:hover {
+            transform: translateY(-5px);
+        }
+        .backtotop-wrap i {
+            color: #0f0f0f;
+            font-size: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 991px) {
+            .about-hero-title { font-size: 2.8rem; }
+            .section-title { font-size: 2.2rem; }
+            .about-content { padding-left: 0; margin-top: 50px; }
+            .about-experience-badge { right: 20px; bottom: -20px; padding: 20px; }
+            .experience-number { font-size: 2.5rem; }
+            .timeline::before { left: 20px; }
+            .timeline-point { left: 20px; }
+            .timeline-item, .timeline-item:nth-child(odd) { flex-direction: column; text-align: left; }
+            .timeline-item .timeline-content, .timeline-item:nth-child(odd) .timeline-content { padding-left: 60px; padding-right: 0; }
+        }
+        @media (max-width: 767px) {
+            .about-hero { padding: 120px 0 80px; }
+            .about-hero-title { font-size: 2rem; }
+            .about-hero-subtitle::before, .about-hero-subtitle::after { display: none; }
+            .about-features-list { grid-template-columns: 1fr; }
+            .stat-number { font-size: 2.5rem; }
+            .cta-content h2 { font-size: 2rem; }
+            .cta-buttons { flex-direction: column; align-items: center; }
+        }
+    </style>
 </head>
 
-<body class="rs-smoother-yes rtl">
-
-    <!-- preloader start -->
+<body>
+    <!-- Preloader
     <div id="pre-load">
         <div id="loader" class="loader">
             <div class="loader-container">
-                <div class="loader-icon"><img src="assets/images/favicon.png" alt=""></div>
+                <div class="loader-icon"><img src="assets/images/img4.jpg" alt=""></div>
             </div>
         </div>
-    </div>
-    <!-- preloader end -->
+    </div> -->
 
-    <!-- preloader start -->
-
+    <!-- Cursor -->
     <div id="rs-mouse">
         <div id="cursor-ball"></div>
     </div>
 
-    <!-- preloader end -->
-
-    <!-- Header area start -->
+    <!-- Header -->
     <header>
-        <div class="rs-header-area header-transparent has-theme-yellow" id="header-sticky">
+        <div class="rs-header-area header-transparent" id="header-sticky">
             <div class="container">
                 <div class="rs-header-inner">
-                    <!-- Logo Section -->
                     <div class="rs-header-left">
                         <div class="rs-header-logo">
                             <a href="index.php">
@@ -51,18 +938,21 @@
                         </div>
                     </div>
                     <div class="rs-header-menu">
-                        <nav id="mobile-menu" class="main-menu has-theme-yellow">
+                        <nav id="mobile-menu" class="main-menu">
                             <ul class="onepage-menu">
                                 <li><a href="index.php">Home</a></li>
                                 <li class="active"><a href="about.html">About</a></li>
                                 <li><a href="service.html">Services</a></li>
                                 <li><a href="Gallery.php">Gallery</a></li>
+                                <li><a href="gifts.html">Gifts</a></li>
+                                <li><a href="frames.html">Frames</a></li>
+                                <li><a href="offers.html">Offers</a></li>
                                 <li><a href="contact.html">Contact</a></li>
+                                <li><a href="register_form.php">Admin</a></li>
                             </ul>
                         </nav>
                     </div>
                     <div class="rs-header-right">
-                        <!-- Schedule a Shoot Button -->
                         <div class="rs-header-btn style-one d-none d-sm-block">
                             <a class="rs-btn has-theme-yellow has-radius" href="order.html">Schedule a Shoot</a>
                         </div>
@@ -75,15 +965,16 @@
                                 </a>
                             </div>
                         </div>
+                        <div class="login-container d-none d-lg-block">
+                            <a href="register_form.php" class="btn btn-outline-light btn-equal">Login</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Header area end -->
-
-    <!-- Offcanvas area start -->
+    <!-- Offcanvas Menu -->
     <div class="fix">
         <div class="offcanvas-area" data-lenis-prevent>
             <div class="offcanvas-wrapper">
@@ -97,17 +988,16 @@
                         <div class="offcanvas-close">
                             <button class="offcanvas-close-icon animation--flip">
                                 <span class="offcanvas-m-lines">
-                                <span class="offcanvas-m-line line--1"></span><span
-                                    class="offcanvas-m-line line--2"></span><span
-                                    class="offcanvas-m-line line--3"></span>
+                                    <span class="offcanvas-m-line line--1"></span>
+                                    <span class="offcanvas-m-line line--2"></span>
+                                    <span class="offcanvas-m-line line--3"></span>
                                 </span>
                             </button>
                         </div>
                     </div>
                     <div class="offcanvas-about mb-30 d-none d-sm-block">
                         <h4 class="offcanvas-title-meta">About RK Studio</h4>
-                        <p>RK Studio is a Professional Photography Studio. Specializing in weddings, portraits,
-                            events and commercial photography. </p>
+                        <p>RK Studio is a Professional Photography Studio specializing in weddings, portraits, events, and commercial photography.</p>
                     </div>
                     <div class="mobile-menu">
                         <div class="rs-offcanvas-menu mb-25">
@@ -118,35 +1008,19 @@
                         <h4 class="offcanvas-title-meta">Contact Info</h4>
                         <ul>
                             <li class="d-flex align-items-center gap-15">
-                                <div class="offcanvas-contact-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="18" viewBox="0 0 14 18" fill="none">
-                                        <path d="M11.8768 9.68475C11.3059 10.835 10.5331 11.9818 9.74128 13.0109C8.95198 14.0368 8.15999 14.9249 7.5643 15.5572C7.48514 15.6412 7.40956 15.7206 7.33802 15.7951C7.26648 15.7206 7.1909 15.6412 7.11174 15.5572C6.51605 14.9249 5.72406 14.0368 4.93476 13.0109C4.14299 11.9818 3.37019 10.835 2.79925 9.68475C2.22242 8.52266 1.89032 7.43373 1.89032 6.5C1.89032 3.50846 4.32934 1.08333 7.33802 1.08333C10.3467 1.08333 12.7857 3.50846 12.7857 6.5C12.7857 7.43373 12.4536 8.52266 11.8768 9.68475ZM7.33802 17.3333C7.33802 17.3333 13.8753 11.1732 13.8753 6.5C13.8753 2.91015 10.9484 0 7.33802 0C3.7276 0 0.800781 2.91015 0.800781 6.5C0.800781 11.1732 7.33802 17.3333 7.33802 17.3333Z" fill="#6D6D6D"></path>
-                                        <path d="M7.33802 8.66667C6.13455 8.66667 5.15894 7.69662 5.15894 6.5C5.15894 5.30338 6.13455 4.33333 7.33802 4.33333C8.54149 4.33333 9.5171 5.30338 9.5171 6.5C9.5171 7.69662 8.54149 8.66667 7.33802 8.66667ZM7.33802 9.75C9.14323 9.75 10.6066 8.29492 10.6066 6.5C10.6066 4.70507 9.14323 3.25 7.33802 3.25C5.53281 3.25 4.0694 4.70507 4.0694 6.5C4.0694 8.29492 5.53281 9.75 7.33802 9.75Z" fill="#6D6D6D"></path>
-                                    </svg>
-                                </div>
+                                <div class="offcanvas-contact-icon"><i class="ri-map-pin-line"></i></div>
                                 <div class="offcanvas-contact-text">
-                                    <a href="#"> 2096 New Market, New Road <br>
-                                    North Carolina, USA </a>
+                                    <a href="#">Paramakudi, Tamil Nadu, India</a>
                                 </div>
                             </li>
                             <li class="d-flex align-items-center gap-15">
-                                <div class="offcanvas-contact-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                        <path d="M3.65387 1.32849C3.40343 1.00649 2.92745 0.976861 2.639 1.26531L1.60508 2.29923C1.1216 2.78271 0.94387 3.46766 1.1551 4.06847C2.00338 6.48124 3.39215 8.74671 5.32272 10.6773C7.25329 12.6078 9.51876 13.9966 11.9315 14.8449C12.5323 15.0561 13.2173 14.8784 13.7008 14.3949L14.7347 13.361C15.0231 13.0726 14.9935 12.5966 14.6715 12.3461L12.3653 10.5524C12.2008 10.4245 11.9866 10.3793 11.7845 10.4298L9.59541 10.9771C9.00082 11.1257 8.37183 10.9515 7.93845 10.5181L5.48187 8.06155C5.04849 7.62817 4.87427 6.99919 5.02292 6.40459L5.57019 4.21553C5.62073 4.01336 5.57552 3.79918 5.44758 3.63468L3.65387 1.32849ZM1.88477 0.511076C2.62689 -0.231039 3.8515 -0.154797 4.49583 0.673634L6.28954 2.97983C6.6187 3.40304 6.73502 3.95409 6.60498 4.47423L6.05772 6.66329C5.99994 6.8944 6.06766 7.13888 6.2361 7.30732L8.69268 9.7639C8.86113 9.93235 9.1056 10.0001 9.33671 9.94229L11.5258 9.39502C12.0459 9.26499 12.597 9.3813 13.0202 9.71047L15.3264 11.5042C16.1548 12.1485 16.231 13.3731 15.4889 14.1152L14.455 15.1492C13.7153 15.8889 12.6089 16.2137 11.5778 15.8512C9.01754 14.9511 6.61438 13.4774 4.56849 11.4315C2.5226 9.38562 1.04895 6.98246 0.148838 4.42225C-0.213682 3.39112 0.11113 2.28472 0.85085 1.545L1.88477 0.511076Z" fill="#6D6D6D"></path>
-                                        <path d="M11 0.5C11 0.223858 11.2239 0 11.5 0H15.5C15.7761 0 16 0.223858 16 0.5V4.5C16 4.77614 15.7761 5 15.5 5C15.2239 5 15 4.77614 15 4.5V1.70711L10.8536 5.85355C10.6583 6.04882 10.3417 6.04882 10.1464 5.85355C9.95118 5.65829 9.95118 5.34171 10.1464 5.14645L14.2929 1H11.5C11.2239 1 11 0.776142 11 0.5Z" fill="#6D6D6D"></path>
-                                    </svg>
-                                </div>
+                                <div class="offcanvas-contact-icon"><i class="ri-phone-line"></i></div>
                                 <div class="offcanvas-contact-text">
-                                    <a href="tel:+12346691234"> +123-4669-1234 </a>
+                                    <a href="tel:+919876543210">+91 98765 43210</a>
                                 </div>
                             </li>
                             <li class="d-flex align-items-center gap-15">
-                                <div class="offcanvas-contact-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                        <path d="M2 2C0.895431 2 0 2.89543 0 4V12L2.58386e-05 12.0103C0.00555998 13.1101 0.898859 14 2 14H7.5C7.77614 14 8 13.7761 8 13.5C8 13.2239 7.77614 13 7.5 13H2C1.53715 13 1.14774 12.6855 1.03376 12.2586L6.67417 8.7876L8 9.5831L15 5.3831V8.5C15 8.77614 15.2239 9 15.5 9C15.7761 9 16 8.77614 16 8.5V4C16 2.89543 15.1046 2 14 2H2ZM5.70808 8.20794L1 11.1052V5.3831L5.70808 8.20794ZM1 4.2169V4C1 3.44772 1.44772 3 2 3H14C14.5523 3 15 3.44772 15 4V4.2169L8 8.4169L1 4.2169Z" fill="#6D6D6D"></path>
-                                        <path d="M14.2467 14.2686C15.2567 14.2686 15.8339 13.4116 15.8339 12.2442V12.0344C15.8339 10.4297 14.6402 9 12.5197 9H12.4847C10.421 9 9 10.3598 9 12.4322V12.6465C9 14.8195 10.4385 16 12.3579 16H12.4016C12.9963 16 13.4204 15.9257 13.639 15.8251V15.0949C13.3941 15.2042 12.9656 15.2742 12.4585 15.2742H12.4147C11.0812 15.2742 9.84385 14.4872 9.84385 12.6202V12.4628C9.84385 10.8057 10.9019 9.73891 12.4847 9.73891H12.524C14.0587 9.73891 15.0075 10.7883 15.0075 12.065V12.183C15.0075 13.158 14.6839 13.5734 14.3691 13.5734C14.1374 13.5734 13.9582 13.4247 13.9582 13.1537V10.9631H13.0531V11.5315H13.0225C12.9394 11.2342 12.6552 10.9019 12.0693 10.9019C11.2911 10.9019 10.8101 11.4572 10.8101 12.3011V12.8301C10.8101 13.722 11.2998 14.2642 12.0693 14.2642C12.5415 14.2642 12.9656 14.0369 13.0837 13.6215H13.1274C13.2455 14.0412 13.7439 14.2686 14.2467 14.2686ZM11.7939 12.6814V12.4541C11.7939 11.9076 12.0212 11.6627 12.3666 11.6627C12.664 11.6627 12.9394 11.8551 12.9394 12.371V12.7383C12.9394 13.3111 12.6858 13.4816 12.3754 13.4816C12.0212 13.4816 11.7939 13.2673 11.7939 12.6814Z" fill="#6D6D6D"></path>
-                                    </svg>
-                                </div>
+                                <div class="offcanvas-contact-icon"><i class="ri-mail-line"></i></div>
                                 <div class="offcanvas-contact-text">
                                     <a href="mailto:rkstudio@gmail.com">rkstudio@gmail.com</a>
                                 </div>
@@ -154,12 +1028,12 @@
                         </ul>
                     </div>
                     <div class="offcanvas-social">
-                        <h4 class="offcanvas-title-meta">Subscribe & Follow</h4>
+                        <h4 class="offcanvas-title-meta">Follow Us</h4>
                         <ul>
                             <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
                             <li><a href="#"><i class="fab fa-youtube"></i></a></li>
-                            <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
+                            <li><a href="#"><i class="fab fa-whatsapp"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -168,208 +1042,61 @@
     </div>
     <div class="offcanvas-overlay"></div>
     <div class="offcanvas-overlay-white"></div>
-    <!-- Offcanvas area start -->
 
-    <!-- Body main wrapper start -->
     <main>
-
-        <!-- breadcrumb area start -->
-        <section class="rs-breadcrumb-area rs-breadcrumb-one p-relative">
-            <div class="rs-breadcrumb-bg bg-white" data-background="assets/images/bg/breadcrumb-bg-01.png"></div>
-            <div class="rs-breadcrumb-bg bg-black" data-background="assets/images/bg/breadcrumb-bg-dark-01.png"></div>
+        <!-- Hero Banner -->
+        <section class="about-hero">
             <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-xxl-6 col-xl-8 col-lg-8">
-                        <div class="rs-breadcrumb-content-wrapper">
-                            <div class="rs-breadcrumb-title-wrapper text-center">
-                                <h1 class="rs-breadcrumb-title">About</h1>
-                            </div>
-                            <div class="rs-breadcrumb-menu text-center">
-                                <nav>
-                                    <ul>
-                                        <li><span><a href="index.php">Home</a></span></li>
-                                        <li><span>About</span></li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
+                <div class="about-hero-content" data-aos="fade-up" data-aos-duration="1000">
+                    <span class="about-hero-subtitle">Welcome to RK Studio</span>
+                    <h1 class="about-hero-title">Capturing <span>Timeless</span> Moments</h1>
+                    <p class="about-hero-desc">With over 15 years of experience, we transform your precious moments into stunning visual stories that last a lifetime.</p>
+                    <div class="breadcrumb-nav">
+                        <a href="index.php">Home</a>
+                        <span class="breadcrumb-separator"><i class="ri-arrow-right-s-line"></i></span>
+                        <span>About Us</span>
                     </div>
                 </div>
             </div>
         </section>
-        <!-- breadcrumb area end -->
 
-        <!-- about area start -->
-        <section class="rs-about-area section-space rs-about-fourteen primary-bg">
+        <!-- About Section -->
+        <section class="about-section">
             <div class="container">
-                <div class="row align-items-center justify-content-center g-5">
-                    <div class="col-xl-5 col-lg-5">
-                        <div class="rs-about-thumb-wrapper position-relative wow fadeInLeft" data-wow-delay=".3s">
-                            <div class="rs-about-thumb">
-                                <img src="assets/images/about/about-thumb-10.png" alt="image">
-                                <div class="rs-about-exp gsap-move up-100 start-70">
-                                    <h3 class="rs-about-exp-title"><span data-purecounter-duration="1" data-purecounter-end="30"
-                                 class="purecounter">30</span>+</h3>
-                                    <p>Years of Experience</p>
-                                </div>
+                <div class="row align-items-center">
+                    <div class="col-lg-5" data-aos="fade-right" data-aos-duration="1000">
+                        <div class="about-image-wrapper">
+                            <img src="assets/images/img4.jpg" alt="RK Studio Photography" class="about-main-image">
+                            <div class="about-experience-badge">
+                                <span class="experience-number">15+</span>
+                                <span class="experience-text">Years Experience</span>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-7 col-lg-7">
-                        <div class="rs-about-content-wrapper wow fadeInRight" data-wow-delay=".3s">
-                            <div class="rs-section-title-wrapper">
-                                <span class="rs-section-subtitle justify-content-start">
-                           <img src="assets/images/shape/small-arrow.png" alt="image">
-                           About Me
-                        </span>
-                                <h2 class="rs-section-title mb-15 rs-split-text-enable split-in-fade">My Name is <span class="rs-text-primary">Marshall</span> </h2>
-                                <p class="rs-about-designation">Freelance Designer &amp; Developer</p>
-                                <p class="rs-about-description">Hello there, My name is Marshall. I’m a freelancer, I’m winner
-                                    of the world’s most prestigious web design awards in the fields of UI, UX, and innovation.
-                                    With a diverse background in art direction, design leadership, website and app UI/UX design,
-                                    3D design, and branding, I bring a well-rounded skill set to every project I take on.</p>
-                            </div>
-                            <div class="rs-about-bio">
-                                <ul>
-                                    <li>
-                                        Age
-                                        <span>30 Years</span>
-                                    </li>
-                                    <li>
-                                        Bron In
-                                        <span>Los Angeles, USA</span>
-                                    </li>
-                                    <li>
-                                        Phone
-                                        <span><a href="tel:+12346691234"> +123-4669-1234 </a></span>
-                                    </li>
-                                    <li>
-                                        Email
-                                        <span><a href="mailto:marshal@gmail.com">marshal@gmail.com</a></span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- about area end -->
-
-        <!-- skill area start -->
-        <section class="rs-skill-area rs-skill-one has-space-none primary-bg has-bg-dark">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-xl-6 col-lg-6">
-                        <div class="rs-section-title-wrapper section-title-space text-center">
-                            <span class="rs-section-subtitle">
-                        <img src="assets/images/shape/small-arrow.png" alt="image">Expertise
-                     </span>
-                            <h2 class="rs-section-title rs-split-text-enable split-in-fade">My Soft Skills</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="row g-5">
-                    <div class="col-xl-3 col-lg-4 col-md-6">
-                        <div class="rs-skill-wrapper wow fadeInUp" data-wow-delay=".3s">
-                            <div class="rs-skill-item">
-                                <div class="rs-skill-top">
-                                    <div class="rs-skill-icon">
-                                        <img src="assets/images/icon/figma.png" alt="image">
-                                    </div>
-                                    <h5 class="rs-skill-title">Figma</h5>
-                                </div>
-                                <div class="rs-skill-bottom">
-                                    <div class="rs-skill-description">
-                                        <p> I have had the opportunity to work on several projects.</p>
-                                    </div>
-                                    <div class="rs-skill-progress">
-                                        <div class="single-progress">
-                                            <div class="progress">
-                                                <div class="progress-bar wow fadeInLeft" data-wow-duration="0.8s" data-wow-delay=".3s" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
-                                                </div>
-                                                <span class="progress-number">90%</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-md-6">
-                        <div class="rs-skill-wrapper wow fadeInUp" data-wow-delay=".5s">
-                            <div class="rs-skill-item">
-                                <div class="rs-skill-top">
-                                    <div class="rs-skill-icon">
-                                        <img src="assets/images/icon/wordpress.png" alt="image">
-                                    </div>
-                                    <h5 class="rs-skill-title">WordPress</h5>
-                                </div>
-                                <div class="rs-skill-bottom">
-                                    <div class="rs-skill-description">
-                                        <p> We are helping client to create UI websites.</p>
-                                    </div>
-                                    <div class="rs-skill-progress">
-                                        <div class="single-progress">
-                                            <div class="progress">
-                                                <div class="progress-bar wow fadeInLeft" data-wow-duration="0.8s" data-wow-delay=".3s" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100">
-                                                </div>
-                                                <span class="progress-number">95%</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-md-6">
-                        <div class="rs-skill-wrapper wow fadeInUp" data-wow-delay=".7s">
-                            <div class="rs-skill-item">
-                                <div class="rs-skill-top">
-                                    <div class="rs-skill-icon">
-                                        <img src="assets/images/icon/react.png" alt="image">
-                                    </div>
-                                    <h5 class="rs-skill-title">React</h5>
-                                </div>
-                                <div class="rs-skill-bottom">
-                                    <div class="rs-skill-description">
-                                        <p> Contrary the popular belief Lorem Ipsum not simply.</p>
-                                    </div>
-                                    <div class="rs-skill-progress">
-                                        <div class="single-progress">
-                                            <div class="progress">
-                                                <div class="progress-bar wow fadeInLeft" data-wow-duration="0.8s" data-wow-delay=".3s" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
-                                                </div>
-                                                <span class="progress-number">80%</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-md-6">
-                        <div class="rs-skill-wrapper wow fadeInUp" data-wow-delay=".9s">
-                            <div class="rs-skill-item">
-                                <div class="rs-skill-top">
-                                    <div class="rs-skill-icon">
-                                        <img src="assets/images/icon/html.png" alt="image">
-                                    </div>
-                                    <h5 class="rs-skill-title">HTML</h5>
-                                </div>
-                                <div class="rs-skill-bottom">
-                                    <div class="rs-skill-description">
-                                        <p> Excepteur sint occaecat sunt in culpa qui officia.</p>
-                                    </div>
-                                    <div class="rs-skill-progress">
-                                        <div class="single-progress">
-                                            <div class="progress">
-                                                <div class="progress-bar wow fadeInLeft" data-wow-duration="0.8s" data-wow-delay=".3s" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
-                                                </div>
-                                                <span class="progress-number">85%</span>
-                                            </div>
-                                        </div>
-                                    </div>
+                    <div class="col-lg-7" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                        <div class="about-content">
+                            <span class="section-subtitle">About RK Studio</span>
+                            <h2 class="section-title">Professional Photography by <span>Rathina Kumar</span></h2>
+                            <p class="about-description">
+                                At RK Studio Photography, we believe every moment tells a story worth preserving. Founded by Rathina Kumar, our studio has been capturing life's most precious moments for over 15 years. We combine creativity, professionalism, and passion to deliver stunning photographs that preserve your most cherished memories.
+                            </p>
+                            <p class="about-description">
+                                From grand weddings to intimate portraits, from corporate events to candid moments â€“ we bring artistic vision and technical expertise to every shoot. Our commitment to excellence has made us one of the most trusted names in photography across Tamil Nadu.
+                            </p>
+                            <ul class="about-features-list">
+                                <li><i class="ri-checkbox-circle-fill"></i> Wedding Photography</li>
+                                <li><i class="ri-checkbox-circle-fill"></i> Frames & Gifts</li>
+                                <li><i class="ri-checkbox-circle-fill"></i> Drone Photography</li>
+                                <li><i class="ri-checkbox-circle-fill"></i> Baby Shoots</li>
+                                <li><i class="ri-checkbox-circle-fill"></i> Album Designing</li>
+                                <li><i class="ri-checkbox-circle-fill"></i> Candid Photography</li>
+                                <li><i class="ri-checkbox-circle-fill"></i> Event Coverage</li>
+                                <li><i class="ri-checkbox-circle-fill"></i> Videography</li>
+                            </ul>
+                            <div class="about-signature">
+                                <div class="signature-info">
+                                    <h5>Rathina Kumar</h5>
+                                    <span>Founder & Lead Photographer</span>
                                 </div>
                             </div>
                         </div>
@@ -377,292 +1104,332 @@
                 </div>
             </div>
         </section>
-        <!-- skill area start -->
 
-        <!-- qualification area start -->
-        <section class="rs-qualification-area rs-qualification-three section-space primary-bg">
+        <!-- Statistics Section -->
+        <section class="stats-section">
             <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-xl-6 col-lg-6">
-                        <div class="rs-section-title-wrapper section-title-space text-center">
-                            <span class="rs-section-subtitle">
-                        <img src="assets/images/shape/small-arrow.png" alt="image">Qualification
-                     </span>
-                            <h2 class="rs-section-title rs-split-text-enable split-in-fade">Work Experience</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center g-5">
-                    <div class="col-xl-9 col-lg-10">
-                        <div class="rs-qualification-content">
-                            <div class="rs-qualification-item">
-                                <div class="left-part wow fadeInLeft" data-wow-delay=".3s">
-                                    <h6 class="rs-qualification-title">Web Developer</h6>
-                                    <span class="rs-qualification-meta">2021 - 20023 (Present)</span>
-                                </div>
-                                <div class="rs-divider"></div>
-                                <div class="right-part wow fadeInRight" data-wow-delay=".3s">
-                                    <h6 class="rs-qualification-title">Envato Marketplace</h6>
-                                    <span class="rs-qualification-meta">I'm winner of the world's most prestigious web design awards in the fields.</span>
-                                </div>
-                            </div>
-                            <div class="rs-qualification-item">
-                                <div class="left-part wow fadeInLeft" data-wow-delay=".5s">
-                                    <h6 class="rs-qualification-title">Online Marketing</h6>
-                                    <span class="rs-qualification-meta">Many desktop publishing packages and web page editors now use Lorem Ipsum</span>
-                                </div>
-                                <div class="rs-divider"></div>
-                                <div class="right-part wow fadeInRight" data-wow-delay=".5s">
-                                    <h6 class="rs-qualification-title">Sr. Developer</h6>
-                                    <span class="rs-qualification-meta">2019 - 2020</span>
-                                </div>
-                            </div>
-                            <div class="rs-qualification-item">
-                                <div class="left-part wow fadeInLeft" data-wow-delay=".7s">
-                                    <h6 class="rs-qualification-title">UI/UX Designer</h6>
-                                    <span class="rs-qualification-meta">2018 - 2019</span>
-                                </div>
-                                <div class="rs-divider"></div>
-                                <div class="right-part wow fadeInRight" data-wow-delay=".7s">
-                                    <h6 class="rs-qualification-title">Dribbble</h6>
-                                    <span class="rs-qualification-meta">All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks.</span>
-                                </div>
-                            </div>
-                            <div class="rs-qualification-item">
-                                <div class="left-part wow fadeInLeft" data-wow-delay=".9s">
-                                    <h6 class="rs-qualification-title">Upwork Market</h6>
-                                    <span class="rs-qualification-meta">Making this the first true generator on the uses a dictionary of over 200</span>
-                                </div>
-                                <div class="rs-divider"></div>
-                                <div class="right-part wow fadeInRight" data-wow-delay=".9s">
-                                    <h6 class="rs-qualification-title">Jr. Developer</h6>
-                                    <span class="rs-qualification-meta">2016 - 2017</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- qualification area end -->
-
-        <!-- testimonial area start -->
-        <section class="rs-testimonial-area rs-testimonial-one section-space p-relative secondary-bg">
-            <div class="rs-testimonial-bg" data-background="assets/images/bg/testimonial-bg-01.png">
-            </div>
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-xl-6 col-lg-6">
-                        <div class="rs-section-title-wrapper section-title-space text-center">
-                            <span class="rs-section-subtitle">
-                        <img src="assets/images/shape/small-arrow.png" alt="image">TESTIMONIAL
-                     </span>
-                            <h2 class="rs-section-title rs-split-text-enable split-in-fade">What My Clients Say</h2>
-                        </div>
-                    </div>
-                </div>
                 <div class="row">
-                    <div class="col-xl-12">
-                        <div class="swiper testimonial_active_one wow fadeInUp" data-wow-delay=".3s">
-                            <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <div class="rs-testimonial-wrapper">
-                                        <div class="rs-testimonial-item">
-                                            <div class="rs-testimonial-content">
-                                                <div class="rs-testimonial-top">
-                                                    <h5 class="rs-testimonial-title">Great Advice</h5>
-                                                    <div class="rs-rating">
-                                                        <span><i class="ri-star-fill"></i></span>
-                                                        <span><i class="ri-star-fill"></i></span>
-                                                        <span><i class="ri-star-fill"></i></span>
-                                                        <span><i class="ri-star-fill"></i></span>
-                                                        <span><i class="ri-star-fill"></i></span>
-                                                    </div>
-                                                </div>
-                                                <div class="rs-testimonial-description">
-                                                    <p> The standard chunk of lorem Ipsum used since the some music reproduced below
-                                                        for
-                                                        those interested.</p>
-                                                </div>
-                                            </div>
-                                            <div class="rs-testimonial-bottom">
-                                                <div class="rs-testimonial-avater-info">
-                                                    <h6 class="rs-testimonial-avater-title">Mel Gibson</h6>
-                                                    <span class="rs-testimonial-avater-designation">Clients</span>
-                                                </div>
-                                                <div class="rs-testimonial-icon">
-                                                    <img src="assets/images/shape/quote-shape.png" alt="image">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="rs-testimonial-wrapper">
-                                        <div class="rs-testimonial-item">
-                                            <div class="rs-testimonial-content">
-                                                <div class="rs-testimonial-top">
-                                                    <h5 class="rs-testimonial-title">Design Quality</h5>
-                                                    <div class="rs-rating">
-                                                        <span><i class="ri-star-fill"></i></span>
-                                                        <span><i class="ri-star-fill"></i></span>
-                                                        <span><i class="ri-star-fill"></i></span>
-                                                        <span><i class="ri-star-fill"></i></span>
-                                                        <span><i class="ri-star-fill"></i></span>
-                                                    </div>
-                                                </div>
-                                                <div class="rs-testimonial-description">
-                                                    <p> The standard chunk of lorem Ipsum used since the some music reproduced below
-                                                        for
-                                                        those interested.</p>
-                                                </div>
-                                            </div>
-                                            <div class="rs-testimonial-bottom">
-                                                <div class="rs-testimonial-avater-info">
-                                                    <h6 class="rs-testimonial-avater-title">Tom Hanks</h6>
-                                                    <span class="rs-testimonial-avater-designation">Jackson S.</span>
-                                                </div>
-                                                <div class="rs-testimonial-icon">
-                                                    <img src="assets/images/shape/quote-shape.png" alt="image">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="rs-testimonial-wrapper">
-                                        <div class="rs-testimonial-item">
-                                            <div class="rs-testimonial-content">
-                                                <div class="rs-testimonial-top">
-                                                    <h5 class="rs-testimonial-title">Great Solution</h5>
-                                                    <div class="rs-rating">
-                                                        <span><i class="ri-star-fill"></i></span>
-                                                        <span><i class="ri-star-fill"></i></span>
-                                                        <span><i class="ri-star-fill"></i></span>
-                                                        <span><i class="ri-star-fill"></i></span>
-                                                        <span><i class="ri-star-fill"></i></span>
-                                                    </div>
-                                                </div>
-                                                <div class="rs-testimonial-description">
-                                                    <p> The standard chunk of lorem Ipsum used since the some music reproduced below
-                                                        for
-                                                        those interested.</p>
-                                                </div>
-                                            </div>
-                                            <div class="rs-testimonial-bottom">
-                                                <div class="rs-testimonial-avater-info">
-                                                    <h6 class="rs-testimonial-avater-title">Johnny Depp</h6>
-                                                    <span class="rs-testimonial-avater-designation">Ceo</span>
-                                                </div>
-                                                <div class="rs-testimonial-icon">
-                                                    <img src="assets/images/shape/quote-shape.png" alt="image">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="rs-pagination justify-content-center mt-50"></div>
+                    <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-duration="800">
+                        <div class="stat-item">
+                            <div class="stat-icon"><i class="ri-camera-lens-fill"></i></div>
+                            <div class="stat-number" data-purecounter-start="0" data-purecounter-end="2500" data-purecounter-duration="2" class="purecounter">2500</div>
+                            <div class="stat-label">Photo Sessions</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+                        <div class="stat-item">
+                            <div class="stat-icon"><i class="ri-heart-fill"></i></div>
+                            <div class="stat-number" data-purecounter-start="0" data-purecounter-end="500" data-purecounter-duration="2" class="purecounter">500</div>
+                            <div class="stat-label">Weddings Covered</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+                        <div class="stat-item">
+                            <div class="stat-icon"><i class="ri-emotion-happy-fill"></i></div>
+                            <div class="stat-number" data-purecounter-start="0" data-purecounter-end="1800" data-purecounter-duration="2" class="purecounter">1800</div>
+                            <div class="stat-label">Happy Clients</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+                        <div class="stat-item">
+                            <div class="stat-icon"><i class="ri-award-fill"></i></div>
+                            <div class="stat-number" data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="2" class="purecounter">15</div>
+                            <div class="stat-label">Years Experience</div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        <!-- testimonial area end -->
 
-        <!-- cta area start -->
-        <section class="rs-cta-area section-space rs-cta-four p-relative primary-bg">
-            <div class="rs-cta-bg" data-background="assets/images/bg/cta-bg-01.png">
-            </div>
+        <!-- Services Section -->
+        <section class="services-section">
             <div class="container">
-                <div class="row align-items-center justify-content-center g-5">
-                    <div class="col-xl-8 col-lg-8">
-                        <div class="rs-cta-content">
-                            <div class="rs-cta-large-text  gsap-move right-60 start-81">
-                                <h2 class="rs-cta-large-title">Hello</h2>
-                            </div>
-                            <div class="rs-cta-shape">
-                                <img src="assets/images/shape/hand-shape.png" alt="image">
-                            </div>
-                            <h2 class="rs-cta-title rs-split-text-enable split-in-fade">If you have any project in mind?</h2>
-                            <h3 class="rs-cta-meta">
-                                DM now!
-                                <a href="mailto:rkstudio@gmail.com">rkstudio@gmail.com</a>
-                            </h3>
-                            <div class="rs-cta-btn">
-                                <div class="rs-btn-group">
-                                    <a class="rs-btn rs-btn-circle" href="contact.html">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-                                            <path d="M31,0H15V2H28.59L.29,30.29l1.41,1.41L30,3.41V16h2V1A1,1,0,0,0,31,0Z"></path>
-                                        </svg>
-                                    </a>
-                                    <a class="rs-btn rs-btn-primary" href="contact.html">Hire Me Now</a>
-                                    <a class="rs-btn rs-btn-circle" href="contact.html">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-                                            <path d="M31,0H15V2H28.59L.29,30.29l1.41,1.41L30,3.41V16h2V1A1,1,0,0,0,31,0Z"></path>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
+                <div class="row justify-content-center mb-5">
+                    <div class="col-lg-6 text-center" data-aos="fade-up" data-aos-duration="800">
+                        <span class="section-subtitle justify-content-center">What We Offer</span>
+                        <h2 class="section-title">Our <span>Services</span></h2>
+                    </div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-duration="800">
+                        <div class="service-card">
+                            <div class="service-icon"><i class="ri-heart-3-fill"></i></div>
+                            <h4>Wedding Photography</h4>
+                            <p>Capture every magical moment of your special day with our expert wedding photography services designed to preserve your love story forever.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+                        <div class="service-card">
+                            <div class="service-icon"><i class="ri-drone-fill"></i></div>
+                            <h4>Drone Photography</h4>
+                            <p>Experience breathtaking aerial views and cinematic shots with our professional drone photography and videography services.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+                        <div class="service-card">
+                            <div class="service-icon"><i class="ri-emotion-happy-line"></i></div>
+                            <h4>Baby Shoots</h4>
+                            <p>Adorable and creative baby photography sessions that capture the precious early moments of your little one's life.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+                        <div class="service-card">
+                            <div class="service-icon"><i class="ri-camera-fill"></i></div>
+                            <h4>Candid Photography</h4>
+                            <p>Natural, unposed moments captured beautifully. Our candid photography reveals genuine emotions and authentic connections.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
+                        <div class="service-card">
+                            <div class="service-icon"><i class="ri-book-3-fill"></i></div>
+                            <h4>Album Designing</h4>
+                            <p>Custom-designed premium photo albums that beautifully showcase your cherished memories in a timeless keepsake.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-duration="800" data-aos-delay="500">
+                        <div class="service-card">
+                            <div class="service-icon"><i class="ri-vidicon-fill"></i></div>
+                            <h4>Videography</h4>
+                            <p>Professional video production services including cinematic wedding films, event coverage, and promotional videos.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        <!-- cta area end -->
 
-
-    </main>
-    <!-- Body main wrapper end -->
-
-    <!-- footer area start -->
-    <footer class="rs-footer-area rs-footer-one primary-bg">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-xl-6">
-                    <div class="rs-footer-widget footer-1-col-1">
-                        <div class="rs-footer-widget-logo text-center">
-                            <a href="index.php"><img src="assets/images/logo10.png" alt="RK Studio Logo" style="max-height: 60px;"></a>
+        <!-- Journey Timeline -->
+        <section class="timeline-section">
+            <div class="container">
+                <div class="row justify-content-center mb-5">
+                    <div class="col-lg-6 text-center" data-aos="fade-up" data-aos-duration="800">
+                        <span class="section-subtitle justify-content-center">Our Journey</span>
+                        <h2 class="section-title">Milestones & <span>Achievements</span></h2>
+                    </div>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item" data-aos="fade-up" data-aos-duration="800">
+                        <div class="timeline-point"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-year">2010</span>
+                            <h4 class="timeline-title">RK Studio Founded</h4>
+                            <p class="timeline-desc">Started our photography journey with a passion for capturing beautiful moments and creating lasting memories.</p>
                         </div>
-                        <div class="rs-footer-widget-content">
-                            <div class="rs-footer-list-wrapper">
-                                <ul class="rs-footer-list">
-                                    <li><a href="index.php">Home</a></li>
-                                    <li><a href="about.html">About</a></li>
-                                    <li><a href="service.html">Services</a></li>
-                                    <li><a href="Gallery.php">Gallery</a></li>
-                                    <li><a href="contact.html">Contact</a></li>
-                                </ul>
-                            </div>
+                    </div>
+                    <div class="timeline-item" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+                        <div class="timeline-point"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-year">2014</span>
+                            <h4 class="timeline-title">500+ Weddings Milestone</h4>
+                            <p class="timeline-desc">Celebrated covering over 500 weddings, establishing ourselves as a trusted name in wedding photography.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+                        <div class="timeline-point"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-year">2018</span>
+                            <h4 class="timeline-title">Drone Photography Launch</h4>
+                            <p class="timeline-desc">Introduced professional drone photography services to offer stunning aerial perspectives for weddings and events.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+                        <div class="timeline-point"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-year">2024</span>
+                            <h4 class="timeline-title">Studio Expansion</h4>
+                            <p class="timeline-desc">Expanded our services to include premium framing, gifts, and comprehensive videography solutions.</p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="rs-footer-copyright-area rs-copyright-one">
+        </section>
+
+        <!-- Meet the Team -->
+        <section class="team-section">
             <div class="container">
+                <div class="row justify-content-center mb-5">
+                    <div class="col-lg-6 text-center" data-aos="fade-up" data-aos-duration="800">
+                        <span class="section-subtitle justify-content-center">The Face Behind RK Studio</span>
+                        <h2 class="section-title">Meet <span>Rathina Kumar</span></h2>
+                    </div>
+                </div>
                 <div class="row justify-content-center">
-                    <div class="col-xl-12">
-                        <div class="rs-footer-copyright text-center">
-                            <p>© <span id="year"></span> RK Studio. All Rights Reserved.</p>
+                    <div class="col-lg-5 col-md-8" data-aos="fade-up" data-aos-duration="1000">
+                        <div class="team-card">
+                            <div class="team-image">
+                                <img src="assets/images/img5.jpg" alt="Rathina Kumar">
+                            </div>
+                            <div class="team-content">
+                                <h4>Rathina Kumar</h4>
+                                <p class="position">Founder & Lead Photographer</p>
+                                <p>With a keen eye for detail and a passion for storytelling through images, Rathina Kumar has been capturing life's most precious moments for over 15 years. His unique style combines traditional techniques with modern creativity.</p>
+                                <div class="team-social">
+                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                    <a href="#"><i class="fab fa-instagram"></i></a>
+                                    <a href="#"><i class="fab fa-youtube"></i></a>
+                                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="testimonials-section">
+            <div class="container">
+                <div class="row justify-content-center mb-5">
+                    <div class="col-lg-6 text-center" data-aos="fade-up" data-aos-duration="800">
+                        <span class="section-subtitle justify-content-center">Client Reviews</span>
+                        <h2 class="section-title">What Our <span>Clients Say</span></h2>
+                    </div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-duration="800">
+                        <div class="testimonial-card">
+                            <div class="testimonial-stars">
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                            </div>
+                            <p class="testimonial-text">"RK Studio captured our wedding beautifully! Every moment was preserved perfectly. The team's professionalism and creativity exceeded our expectations."</p>
+                            <div class="testimonial-author">
+                                <img src="assets/images/user/user-1.png" alt="Client" class="testimonial-avatar">
+                                <div class="testimonial-info">
+                                    <h6>Priya & Karthik</h6>
+                                    <span>Wedding Photography</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+                        <div class="testimonial-card">
+                            <div class="testimonial-stars">
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                            </div>
+                            <p class="testimonial-text">"The baby photoshoot was amazing! Rathina Kumar has incredible patience with kids and captured the most adorable moments of our little one."</p>
+                            <div class="testimonial-author">
+                                <img src="assets/images/user/user-2.png" alt="Client" class="testimonial-avatar">
+                                <div class="testimonial-info">
+                                    <h6>Deepa Sundar</h6>
+                                    <span>Baby Photography</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+                        <div class="testimonial-card">
+                            <div class="testimonial-stars">
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                            </div>
+                            <p class="testimonial-text">"The drone shots at our corporate event were spectacular! Professional service, timely delivery, and outstanding quality. Highly recommended!"</p>
+                            <div class="testimonial-author">
+                                <img src="assets/images/user/user-3.png" alt="Client" class="testimonial-avatar">
+                                <div class="testimonial-info">
+                                    <h6>Rajesh Kumar</h6>
+                                    <span>Corporate Event</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-content" data-aos="fade-up" data-aos-duration="1000">
+                    <h2>Ready to Capture Your <span style="color: var(--gold);">Special Moments?</span></h2>
+                    <p>Let's create stunning photographs together. Book your session today and let RK Studio tell your story through beautiful images.</p>
+                    <div class="cta-buttons">
+                        <a href="order.html" class="cta-btn-primary">
+                            <i class="ri-calendar-line"></i> Schedule a Shoot
+                        </a>
+                        <a href="contact.html" class="cta-btn-secondary">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-section">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <img src="assets/images/logo10.png" alt="RK Studio" class="footer-logo">
+                    <p class="footer-desc">RK Studio is your trusted partner for capturing life's precious moments. With 15+ years of experience, we deliver stunning photography that tells your unique story.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="footer-title">Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="index.php"><i class="ri-arrow-right-s-line"></i> Home</a></li>
+                        <li><a href="about.html"><i class="ri-arrow-right-s-line"></i> About Us</a></li>
+                        <li><a href="service.html"><i class="ri-arrow-right-s-line"></i> Services</a></li>
+                        <li><a href="Gallery.php"><i class="ri-arrow-right-s-line"></i> Gallery</a></li>
+                        <li><a href="contact.html"><i class="ri-arrow-right-s-line"></i> Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-title">Services</h5>
+                    <ul class="footer-links">
+                        <li><a href="service.html"><i class="ri-arrow-right-s-line"></i> Wedding Photography</a></li>
+                        <li><a href="service.html"><i class="ri-arrow-right-s-line"></i> Baby Shoots</a></li>
+                        <li><a href="service.html"><i class="ri-arrow-right-s-line"></i> Drone Photography</a></li>
+                        <li><a href="frames.html"><i class="ri-arrow-right-s-line"></i> Frames & Albums</a></li>
+                        <li><a href="gifts.html"><i class="ri-arrow-right-s-line"></i> Gifts</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-title">Contact Us</h5>
+                    <div class="footer-contact-item">
+                        <div class="footer-contact-icon"><i class="ri-map-pin-line"></i></div>
+                        <div class="footer-contact-text">Paramakudi, Tamil Nadu, India</div>
+                    </div>
+                    <div class="footer-contact-item">
+                        <div class="footer-contact-icon"><i class="ri-phone-line"></i></div>
+                        <div class="footer-contact-text"><a href="tel:+919876543210">+91 98765 43210</a></div>
+                    </div>
+                    <div class="footer-contact-item">
+                        <div class="footer-contact-icon"><i class="ri-mail-line"></i></div>
+                        <div class="footer-contact-text"><a href="mailto:rkstudio@gmail.com">rkstudio@gmail.com</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="year"></span> RK Studio Photography. All Rights Reserved.</p>
             </div>
         </div>
     </footer>
-    <!-- footer area end -->
 
-    <!-- back to top -->
-    <!-- Backtotop start -->
-    <div class="backtotop-wrap cursor-pointer">
-        <svg class="backtotop-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
-            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
-        </svg>
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/919876543210" target="_blank" class="whatsapp-float">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Back to Top -->
+    <div class="backtotop-wrap" id="backtotop">
+        <i class="ri-arrow-up-line"></i>
     </div>
-    <!-- Backtotop end -->
 
-    <!-- JS here -->
+    <!-- JS -->
     <script src="assets/js/vendor/jquery-3.7.1.min.js"></script>
     <script src="assets/js/plugins/waypoints.min.js"></script>
     <script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
@@ -672,7 +1439,6 @@
     <script src="assets/js/vendor/magnific-popup.min.js"></script>
     <script src="assets/js/vendor/isotope.pkgd.min.js"></script>
     <script src="assets/js/vendor/imagesloaded.pkgd.min.js"></script>
-    <script src="assets/js/plugins/nice-select.min.js"></script>
     <script src="assets/js/plugins/jarallax.min.js"></script>
     <script src="assets/js/vendor/ajax-form.js"></script>
     <script src="assets/js/plugins/easypie.js"></script>
@@ -687,5 +1453,32 @@
     <script src="assets/js/vendor/purecounter.js"></script>
     <script src="assets/js/vendor/dark-light.js"></script>
     <script src="assets/js/main.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            once: true,
+            easing: 'ease-out-cubic'
+        });
+
+        // Year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Back to top
+        const backToTop = document.getElementById('backtotop');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('active');
+            } else {
+                backToTop.classList.remove('active');
+            }
+        });
+        backToTop.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Initialize PureCounter
+        new PureCounter();
+    </script>
 </body>
 </html>
