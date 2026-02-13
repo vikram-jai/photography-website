@@ -1254,13 +1254,13 @@ if($banner_query && mysqli_num_rows($banner_query) > 0){
                                 <li><a href="index.php">Home</a></li>
                                 <li><a href="about.html">About</a></li>
                                 <li><a href="service.html">Services</a></li>
-                                <li><a href="#homeportfolio">Portfolio</a></li>
+                                <!-- <li><a href="#homeportfolio">Portfolio</a></li> -->
                                 <li><a href="Gallery.php">Gallery</a></li>
-                                <li><a href="gifts.html">Gifts</a></li>
-                                <li><a href="frames.html">Frames</a></li>
+                                <li><a href="gifts.html">Gifts </a></li>
+                                   <li><a href="frames.html">Frames</a></li> 
                                 <li><a href="offers.html">Offers</a></li>
                                 <li><a href="contact.html">Contact</a></li>
-                                <li><a href="register_form.php">Admin</a></li>
+                                       <!-- <li><a href="register_form.php">Admin</a></li>  -->
                             </ul>
                         </nav>
                     </div>

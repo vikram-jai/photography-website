@@ -188,10 +188,14 @@ $create_videos_table = "CREATE TABLE IF NOT EXISTS videos (
     video_url VARCHAR(500) NOT NULL,
     thumbnail VARCHAR(255),
     duration VARCHAR(20),
+    description TEXT,
     featured TINYINT(1) DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )";
 mysqli_query($conn, $create_videos_table);
+
+// Add description column if it doesn't exist
+@mysqli_query($conn, "ALTER TABLE videos ADD COLUMN description TEXT AFTER duration");
 
 // Add video
 if(isset($_POST['add_video'])){
@@ -199,6 +203,7 @@ if(isset($_POST['add_video'])){
    $category = mysqli_real_escape_string($conn, $_POST['video_category']);
    $video_url = mysqli_real_escape_string($conn, $_POST['video_url']);
    $duration = mysqli_real_escape_string($conn, $_POST['duration']);
+   $description = mysqli_real_escape_string($conn, $_POST['video_description']);
    $featured = isset($_POST['video_featured']) ? 1 : 0;
    
    $thumbnail = '';
@@ -209,7 +214,7 @@ if(isset($_POST['add_video'])){
       move_uploaded_file($thumb_tmp_name, $thumb_folder);
    }
    
-   $insert_video = mysqli_query($conn, "INSERT INTO videos(title, category, video_url, thumbnail, duration, featured) VALUES('$title', '$category', '$video_url', '$thumbnail', '$duration', '$featured')");
+   $insert_video = mysqli_query($conn, "INSERT INTO videos(title, category, video_url, thumbnail, duration, description, featured) VALUES('$title', '$category', '$video_url', '$thumbnail', '$duration', '$description', '$featured')");
    if($insert_video){
       header('location:portfolio.php?msg=video_added');
       exit();
@@ -643,6 +648,10 @@ if(isset($_GET['delete_video'])){
             <div class="form-group">
                 <label for="duration"><i class="fas fa-clock"></i> Duration</label>
                 <input type="text" name="duration" id="duration" class="form-control" placeholder="e.g., 5:30">
+            </div>
+            <div class="form-group">
+                <label for="video_description"><i class="fas fa-pen"></i> Description (optional)</label>
+                <textarea name="video_description" id="video_description" class="form-control" placeholder="Brief description about the video" rows="2"></textarea>
             </div>
             <div class="form-group">
                 <label for="video_thumbnail"><i class="fas fa-image"></i> Thumbnail Image (optional)</label>

@@ -13,6 +13,33 @@ $create_table = "CREATE TABLE IF NOT EXISTS portfolio (
 )";
 @mysqli_query($conn, $create_table);
 
+// Create banner_slides table if not exists
+$create_banner_table = "CREATE TABLE IF NOT EXISTS banner_slides (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    subtitle VARCHAR(255),
+    description TEXT,
+    image VARCHAR(255) NOT NULL,
+    display_order INT DEFAULT 0,
+    active TINYINT(1) DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)";
+@mysqli_query($conn, $create_banner_table);
+
+// Create videos table if not exists
+$create_videos_table = "CREATE TABLE IF NOT EXISTS videos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    category VARCHAR(100) NOT NULL,
+    video_url VARCHAR(500) NOT NULL,
+    thumbnail VARCHAR(255),
+    duration VARCHAR(20),
+    description TEXT,
+    featured TINYINT(1) DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)";
+@mysqli_query($conn, $create_videos_table);
+
 // Get filter category
 $filter = isset($_GET['category']) ? $_GET['category'] : 'all';
 $search = isset($_GET['search']) ? mysqli_real_escape_string($conn, $_GET['search']) : '';
@@ -49,14 +76,11 @@ switch($sort) {
 $query = "SELECT * FROM portfolio $where_clause $order_clause";
 $portfolio_items = @mysqli_query($conn, $query);
 
-// Get all categories for filter buttons
-$categories_query = @mysqli_query($conn, "SELECT DISTINCT category FROM portfolio ORDER BY category");
-$categories = [];
-if($categories_query) {
-    while($cat = mysqli_fetch_assoc($categories_query)) {
-        $categories[] = $cat['category'];
-    }
-}
+// Get banner slides
+$banner_slides = @mysqli_query($conn, "SELECT * FROM banner_slides WHERE active = 1 ORDER BY display_order ASC, id DESC");
+
+// Get videos
+$videos_query = @mysqli_query($conn, "SELECT * FROM videos ORDER BY featured DESC, created_at DESC");
 
 // Count items
 $total_count = $portfolio_items ? mysqli_num_rows($portfolio_items) : 0;
@@ -78,6 +102,7 @@ $total_count = $portfolio_items ? mysqli_num_rows($portfolio_items) : 0;
     <link rel="stylesheet" href="assets/css/vendor/fontawesome-pro.css">
     <link rel="stylesheet" href="assets/css/vendor/remixicon.css">
     <link rel="stylesheet" href="assets/css/vendor/magnific-popup.css">
+    <link rel="stylesheet" href="assets/css/plugins/swiper.min.css">
     <link rel="stylesheet" href="assets/css/main.css">
     
     <style>
@@ -181,278 +206,343 @@ $total_count = $portfolio_items ? mysqli_num_rows($portfolio_items) : 0;
             box-shadow: 0 5px 20px rgba(212, 168, 75, 0.4);
             color: #000;
         }
-        
-        /* Hero Section */
-        .gallery-hero {
-            background: linear-gradient(135deg, rgba(26,26,26,0.9), rgba(15,15,15,0.95)), url('assets/images/bg/gallery-bg.jpg');
-            background-size: cover;
-            background-position: center;
-            padding: 180px 0 80px;
-            text-align: center;
+
+        /* ===== HERO BANNER SLIDER ===== */
+        .gallery-hero-slider {
+            padding-top: 80px;
+            background: var(--darker-bg);
+            position: relative;
+            overflow: hidden;
         }
-        
-        .gallery-hero h1 {
+
+        .hero-slider-wrapper {
+            position: relative;
+        }
+
+        .hero-swiper {
+            width: 100%;
+            height: 70vh;
+            min-height: 500px;
+        }
+
+        .hero-slide {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-slide-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 6s ease;
+        }
+
+        .hero-swiper .swiper-slide-active .hero-slide-image {
+            transform: scale(1.1);
+        }
+
+        .hero-slide-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 60px;
+        }
+
+        .hero-slide-content {
+            max-width: 600px;
+        }
+
+        .hero-slide-subtitle {
+            color: var(--gold);
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease 0.3s;
+        }
+
+        .hero-slide-title {
+            color: #fff;
             font-size: 3.5rem;
             font-weight: 700;
-            margin-bottom: 1rem;
-            color: #fff;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease 0.5s;
         }
-        
-        .gallery-hero h1 span {
-            color: var(--gold);
+
+        .hero-slide-desc {
+            color: rgba(255,255,255,0.8);
+            font-size: 1.1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease 0.7s;
         }
-        
-        .gallery-hero p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto 2rem;
+
+        .hero-swiper .swiper-slide-active .hero-slide-subtitle,
+        .hero-swiper .swiper-slide-active .hero-slide-title,
+        .hero-swiper .swiper-slide-active .hero-slide-desc {
+            opacity: 1;
+            transform: translateY(0);
         }
-        
-        .breadcrumb-nav {
+
+        .hero-slider-nav {
+            position: absolute;
+            bottom: 30px;
+            right: 60px;
             display: flex;
+            gap: 15px;
+            z-index: 10;
+        }
+
+        .hero-nav-btn {
+            width: 50px;
+            height: 50px;
+            border: 2px solid rgba(255,255,255,0.3);
+            background: rgba(0,0,0,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
             justify-content: center;
-            gap: 10px;
-            font-size: 0.95rem;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
         }
-        
-        .breadcrumb-nav a {
-            color: var(--gold);
-            text-decoration: none;
+
+        .hero-nav-btn:hover {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: #000;
         }
-        
-        .breadcrumb-nav span {
-            color: var(--text-muted);
+
+        .hero-pagination {
+            position: absolute;
+            bottom: 30px;
+            left: 60px;
+            z-index: 10;
         }
-        
-        /* Gallery Controls */
-        .gallery-controls {
+
+        .hero-pagination .swiper-pagination-bullet {
+            width: 12px;
+            height: 12px;
+            background: rgba(255,255,255,0.3);
+            opacity: 1;
+            margin: 0 6px;
+        }
+
+        .hero-pagination .swiper-pagination-bullet-active {
+            background: var(--gold);
+            width: 30px;
+            border-radius: 6px;
+        }
+
+        /* Breadcrumb */
+        .gallery-breadcrumb {
             background: var(--dark-bg);
-            padding: 30px 0;
+            padding: 20px 0;
             border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 80px;
-            z-index: 100;
         }
-        
-        .controls-container {
+
+        .breadcrumb-container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 20px;
         }
-        
-        .controls-row {
+
+        .breadcrumb-nav {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
             align-items: center;
-            gap: 20px;
+            gap: 10px;
+            font-size: 0.95rem;
         }
-        
-        .filter-buttons {
+
+        .breadcrumb-nav a {
+            color: var(--gold);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .breadcrumb-nav a:hover {
+            color: var(--gold-light);
+        }
+
+        .breadcrumb-nav span {
+            color: var(--text-muted);
+        }
+
+        /* ===== SECTION TITLE ===== */
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.8rem;
+            color: #fff;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .section-title h2 span {
+            color: var(--gold);
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ===== PHOTOS SECTION ===== */
+        .photos-section {
+            padding: 80px 0;
+            background: var(--darker-bg);
+        }
+
+        .section-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Filter Controls */
+        .filter-controls {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 40px;
         }
-        
+
         .filter-btn {
-            padding: 10px 20px;
+            padding: 12px 25px;
             background: var(--card-bg);
             color: var(--text-light);
             border: 1px solid var(--border-color);
-            border-radius: 25px;
+            border-radius: 30px;
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: 500;
             transition: all 0.3s;
             cursor: pointer;
         }
-        
+
         .filter-btn:hover,
         .filter-btn.active {
             background: var(--gold);
             color: #000;
             border-color: var(--gold);
         }
-        
-        .search-sort-row {
-            display: flex;
-            gap: 15px;
-            align-items: center;
+
+        .filter-btn i {
+            margin-right: 6px;
         }
-        
-        .search-box {
-            position: relative;
-        }
-        
-        .search-box input {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            color: #fff;
-            padding: 10px 40px 10px 15px;
-            border-radius: 25px;
-            font-size: 0.9rem;
-            width: 250px;
-            transition: all 0.3s;
-        }
-        
-        .search-box input:focus {
-            outline: none;
-            border-color: var(--gold);
-        }
-        
-        .search-box button {
-            position: absolute;
-            right: 5px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: var(--gold);
-            border: none;
-            color: #000;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .sort-select {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            color: #fff;
-            padding: 10px 35px 10px 15px;
-            border-radius: 25px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23d4a84b' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-        }
-        
-        .sort-select:focus {
-            outline: none;
-            border-color: var(--gold);
-        }
-        
-        .results-count {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-        
-        .results-count span {
-            color: var(--gold);
-            font-weight: 600;
-        }
-        
-        /* Gallery Grid */
-        .gallery-section {
-            padding: 50px 0 80px;
-        }
-        
-        .gallery-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        .gallery-grid {
+
+        /* Masonry Gallery Grid */
+        .masonry-gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
         }
-        
+
         .gallery-item {
             position: relative;
-            border-radius: 15px;
+            border-radius: 12px;
             overflow: hidden;
-            background: var(--card-bg);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
+            transition: all 0.4s ease;
         }
-        
+
         .gallery-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
-        
-        .gallery-item.featured {
-            grid-column: span 2;
+
+        /* Masonry sizing */
+        .gallery-item.tall {
             grid-row: span 2;
         }
-        
-        @media (max-width: 768px) {
-            .gallery-item.featured {
-                grid-column: span 1;
-                grid-row: span 1;
-            }
+
+        .gallery-item.wide {
+            grid-column: span 2;
         }
-        
+
         .gallery-item-image {
             width: 100%;
-            height: 280px;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-        
-        .gallery-item.featured .gallery-item-image {
             height: 100%;
-            min-height: 590px;
+            min-height: 280px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
         }
-        
+
+        .gallery-item.tall .gallery-item-image {
+            min-height: 580px;
+        }
+
         .gallery-item:hover .gallery-item-image {
-            transform: scale(1.1);
+            transform: scale(1.08);
         }
-        
+
         .gallery-item-overlay {
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
             opacity: 0;
-            transition: opacity 0.4s;
+            transition: opacity 0.4s ease;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
             padding: 25px;
         }
-        
+
         .gallery-item:hover .gallery-item-overlay {
             opacity: 1;
         }
-        
+
         .gallery-item-content {
             transform: translateY(20px);
-            transition: transform 0.4s;
+            transition: transform 0.4s ease;
         }
-        
+
         .gallery-item:hover .gallery-item-content {
             transform: translateY(0);
         }
-        
+
         .gallery-item-category {
             display: inline-block;
             padding: 5px 15px;
             background: var(--gold);
             color: #000;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 600;
             text-transform: uppercase;
+            letter-spacing: 1px;
             border-radius: 20px;
             margin-bottom: 10px;
         }
-        
+
         .gallery-item-title {
             color: #fff;
             font-size: 1.3rem;
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
         }
-        
+
         .gallery-item-desc {
             color: var(--text-muted);
             font-size: 0.9rem;
@@ -461,60 +551,12 @@ $total_count = $portfolio_items ? mysqli_num_rows($portfolio_items) : 0;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-        
-        .gallery-item-actions {
+
+        .gallery-zoom {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            gap: 10px;
-            opacity: 0;
-            transform: translateY(-10px);
-            transition: all 0.4s;
-        }
-        
-        .gallery-item:hover .gallery-item-actions {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .action-btn {
-            width: 45px;
-            height: 45px;
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-size: 1.1rem;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-        
-        .action-btn:hover {
-            background: var(--gold);
-            color: #000;
-            border-color: var(--gold);
-            transform: scale(1.1);
-        }
-        
-        /* Gallery Item Link for Lightbox */
-        .gallery-item-link {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .gallery-zoom-icon {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
             width: 60px;
             height: 60px;
             background: rgba(212, 168, 75, 0.9);
@@ -525,189 +567,28 @@ $total_count = $portfolio_items ? mysqli_num_rows($portfolio_items) : 0;
             color: #000;
             font-size: 1.5rem;
             opacity: 0;
-            transform: scale(0.8);
             transition: all 0.3s ease;
-        }
-        
-        .gallery-item:hover .gallery-zoom-icon {
-            opacity: 1;
-            transform: scale(1);
-        }
-        
-        .gallery-zoom-icon:hover {
-            background: var(--gold);
-            transform: scale(1.1);
-        }
-        
-        /* Video Section */
-        .video-section {
-            padding: 80px 0;
-            background: var(--dark-bg);
-        }
-        
-        .section-header {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-        
-        .section-header h2 {
-            font-size: 2.5rem;
-            color: #fff;
-            margin-bottom: 15px;
-        }
-        
-        .section-header h2 span {
-            color: var(--gold);
-        }
-        
-        .section-header p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
-        }
-        
-        .video-item {
-            position: relative;
-            border-radius: 15px;
-            overflow: hidden;
-            background: var(--card-bg);
-            transition: all 0.4s;
-        }
-        
-        .video-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
-        
-        .video-thumbnail {
-            position: relative;
-            width: 100%;
-            height: 220px;
-            overflow: hidden;
-        }
-        
-        .video-thumbnail img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-        
-        .video-item:hover .video-thumbnail img {
-            transform: scale(1.1);
-        }
-        
-        .video-play-btn {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 70px;
-            height: 70px;
-            background: rgba(212, 168, 75, 0.9);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #000;
-            font-size: 1.8rem;
-            transition: all 0.3s;
-            cursor: pointer;
             text-decoration: none;
         }
-        
-        .video-play-btn:hover {
+
+        .gallery-item:hover .gallery-zoom {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .gallery-zoom:hover {
             background: var(--gold);
             transform: translate(-50%, -50%) scale(1.1);
             color: #000;
         }
-        
-        .video-play-btn i {
-            margin-left: 5px;
-        }
-        
-        .video-info {
-            padding: 20px;
-        }
-        
-        .video-category {
-            display: inline-block;
-            padding: 4px 12px;
-            background: var(--gold);
-            color: #000;
-            font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            border-radius: 15px;
-            margin-bottom: 10px;
-        }
-        
-        .video-title {
-            color: #fff;
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-        
-        .video-duration {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .empty-video-state {
-            text-align: center;
-            padding: 60px 20px;
-            grid-column: 1 / -1;
-        }
-        
-        .empty-video-state i {
-            font-size: 4rem;
-            color: var(--gold);
-            margin-bottom: 20px;
-        }
-        
-        .empty-video-state h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-        
-        .empty-video-state p {
-            color: var(--text-muted);
-        }
-        
-        .featured-badge {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: var(--gold);
-            color: #000;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            z-index: 10;
-        }
-        
+
         /* Empty State */
         .empty-state {
             text-align: center;
             padding: 80px 20px;
             grid-column: 1 / -1;
         }
-        
+
         .empty-state-icon {
             width: 120px;
             height: 120px;
@@ -720,100 +601,252 @@ $total_count = $portfolio_items ? mysqli_num_rows($portfolio_items) : 0;
             font-size: 3rem;
             color: var(--gold);
         }
-        
+
         .empty-state h3 {
             font-size: 1.8rem;
+            color: #fff;
             margin-bottom: 10px;
         }
-        
+
         .empty-state p {
             color: var(--text-muted);
             margin-bottom: 25px;
         }
-        
-        .empty-state .btn-primary {
+
+        /* ===== VIDEOS SECTION ===== */
+        .videos-section {
+            padding: 80px 0;
+            background: var(--dark-bg);
+        }
+
+        .videos-slider-wrapper {
+            position: relative;
+            padding: 0 50px;
+        }
+
+        .videos-swiper {
+            overflow: visible;
+        }
+
+        .video-slide {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .video-slide:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+        }
+
+        .video-thumbnail {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .video-slide:hover .video-thumbnail img {
+            transform: scale(1.08);
+        }
+
+        .video-play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70px;
+            height: 70px;
+            background: rgba(212, 168, 75, 0.95);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .video-play-btn i {
+            margin-left: 4px;
+        }
+
+        .video-play-btn:hover {
+            background: var(--gold);
+            transform: translate(-50%, -50%) scale(1.1);
+            color: #000;
+        }
+
+        .video-info {
+            padding: 20px;
+        }
+
+        .video-category {
+            display: inline-block;
+            padding: 4px 12px;
             background: var(--gold);
             color: #000;
-            padding: 12px 30px;
-            border-radius: 25px;
-            text-decoration: none;
+            font-size: 0.7rem;
             font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-radius: 15px;
+            margin-bottom: 10px;
         }
-        
-        .empty-state .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(212, 168, 75, 0.4);
-        }
-        
-        /* Lightbox Enhancement */
-        .mfp-bg {
-            background: rgba(0,0,0,0.95);
-        }
-        
-        .mfp-image-holder .mfp-close,
-        .mfp-iframe-holder .mfp-close {
-            color: var(--gold);
-            font-size: 35px;
-        }
-        
-        .mfp-arrow {
-            color: var(--gold);
-        }
-        
-        .mfp-title {
+
+        .video-title {
             color: #fff;
-            padding: 15px;
-            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
         }
-        
-        /* Footer */
+
+        .video-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .video-duration {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .videos-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 45px;
+            height: 45px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 10;
+        }
+
+        .videos-nav:hover {
+            background: var(--gold-light);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .videos-prev {
+            left: 0;
+        }
+
+        .videos-next {
+            right: 0;
+        }
+
+        .videos-pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .videos-pagination .swiper-pagination-bullet {
+            width: 10px;
+            height: 10px;
+            background: rgba(255,255,255,0.3);
+            opacity: 1;
+            margin: 0 5px;
+        }
+
+        .videos-pagination .swiper-pagination-bullet-active {
+            background: var(--gold);
+        }
+
+        .empty-video-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: var(--card-bg);
+            border-radius: 15px;
+        }
+
+        .empty-video-state i {
+            font-size: 4rem;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .empty-video-state h3 {
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .empty-video-state p {
+            color: var(--text-muted);
+        }
+
+        /* ===== FOOTER ===== */
         .gallery-footer {
-            background: var(--dark-bg);
+            background: var(--darker-bg);
             padding: 50px 0 30px;
             border-top: 1px solid var(--border-color);
         }
-        
+
         .footer-container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 20px;
             text-align: center;
         }
-        
+
         .footer-logo img {
             height: 60px;
             margin-bottom: 20px;
         }
-        
+
         .footer-links {
             display: flex;
             justify-content: center;
             gap: 30px;
             list-style: none;
             margin-bottom: 25px;
+            padding: 0;
         }
-        
+
         .footer-links a {
             color: var(--text-muted);
             text-decoration: none;
             transition: color 0.3s;
         }
-        
+
         .footer-links a:hover {
             color: var(--gold);
         }
-        
+
         .footer-social {
             display: flex;
             justify-content: center;
             gap: 15px;
             margin-bottom: 25px;
         }
-        
+
         .footer-social a {
             width: 45px;
             height: 45px;
@@ -826,23 +859,23 @@ $total_count = $portfolio_items ? mysqli_num_rows($portfolio_items) : 0;
             text-decoration: none;
             transition: all 0.3s;
         }
-        
+
         .footer-social a:hover {
             background: var(--gold);
             color: #000;
             transform: translateY(-3px);
         }
-        
+
         .footer-copyright {
             color: var(--text-muted);
             font-size: 0.9rem;
         }
-        
+
         .footer-copyright a {
             color: var(--gold);
             text-decoration: none;
         }
-        
+
         /* Back to Top */
         .back-to-top {
             position: fixed;
@@ -864,18 +897,18 @@ $total_count = $portfolio_items ? mysqli_num_rows($portfolio_items) : 0;
             z-index: 999;
             text-decoration: none;
         }
-        
+
         .back-to-top.visible {
             opacity: 1;
             visibility: visible;
         }
-        
+
         .back-to-top:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(212, 168, 75, 0.4);
             color: #000;
         }
-        
+
         /* Mobile Menu */
         .mobile-menu-btn {
             display: none;
@@ -885,7 +918,14 @@ $total_count = $portfolio_items ? mysqli_num_rows($portfolio_items) : 0;
             font-size: 1.5rem;
             cursor: pointer;
         }
-        
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1200px) {
+            .masonry-gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         @media (max-width: 991px) {
             .mobile-menu-btn {
                 display: block;
@@ -911,34 +951,116 @@ $total_count = $portfolio_items ? mysqli_num_rows($portfolio_items) : 0;
             .header-btn {
                 display: none;
             }
-            
-            .gallery-hero h1 {
+
+            .hero-swiper {
+                height: 50vh;
+                min-height: 400px;
+            }
+
+            .hero-slide-title {
                 font-size: 2.5rem;
             }
-            
-            .controls-row {
-                flex-direction: column;
-                gap: 15px;
+
+            .hero-slide-overlay {
+                padding: 40px;
             }
-            
-            .filter-buttons {
-                justify-content: center;
+
+            .hero-slider-nav {
+                right: 40px;
             }
-            
-            .search-sort-row {
-                flex-wrap: wrap;
-                justify-content: center;
+
+            .hero-pagination {
+                left: 40px;
             }
-            
-            .search-box input {
-                width: 200px;
-            }
-            
-            .gallery-grid {
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+
+            .section-title h2 {
+                font-size: 2.2rem;
             }
         }
-        
+
+        @media (max-width: 768px) {
+            .masonry-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-item.tall,
+            .gallery-item.wide {
+                grid-row: span 1;
+                grid-column: span 1;
+            }
+
+            .gallery-item.tall .gallery-item-image {
+                min-height: 280px;
+            }
+
+            .hero-swiper {
+                height: 60vh;
+            }
+
+            .hero-slide-title {
+                font-size: 2rem;
+            }
+
+            .hero-slide-overlay {
+                padding: 30px;
+            }
+
+            .hero-slider-nav {
+                right: 30px;
+                bottom: 20px;
+            }
+
+            .hero-pagination {
+                left: 30px;
+                bottom: 20px;
+            }
+
+            .hero-nav-btn {
+                width: 40px;
+                height: 40px;
+            }
+
+            .filter-controls {
+                gap: 8px;
+            }
+
+            .filter-btn {
+                padding: 10px 18px;
+                font-size: 0.85rem;
+            }
+
+            .videos-slider-wrapper {
+                padding: 0 20px;
+            }
+
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-slide-subtitle {
+                font-size: 0.85rem;
+            }
+
+            .hero-slide-title {
+                font-size: 1.6rem;
+            }
+
+            .hero-slide-desc {
+                font-size: 0.95rem;
+            }
+
+            .filter-btn {
+                padding: 8px 14px;
+                font-size: 0.8rem;
+            }
+
+            .filter-btn i {
+                display: none;
+            }
+        }
+
         /* Animation */
         @keyframes fadeInUp {
             from {
@@ -950,11 +1072,11 @@ $total_count = $portfolio_items ? mysqli_num_rows($portfolio_items) : 0;
                 transform: translateY(0);
             }
         }
-        
+
         .gallery-item {
             animation: fadeInUp 0.6s ease forwards;
         }
-        
+
         .gallery-item:nth-child(2) { animation-delay: 0.1s; }
         .gallery-item:nth-child(3) { animation-delay: 0.2s; }
         .gallery-item:nth-child(4) { animation-delay: 0.3s; }
@@ -989,97 +1111,126 @@ $total_count = $portfolio_items ? mysqli_num_rows($portfolio_items) : 0;
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="gallery-hero">
-        <h1>Our <span>Gallery</span></h1>
-        <p>Explore our collection of stunning photographs capturing life's most precious moments.</p>
-        <div class="breadcrumb-nav">
-            <a href="index.php">Home</a>
-            <span><i class="ri-arrow-right-s-line"></i></span>
-            <span>Gallery</span>
+    <!-- Hero Banner Slider -->
+    <section class="gallery-hero-slider">
+        <div class="hero-slider-wrapper">
+            <?php if($banner_slides && mysqli_num_rows($banner_slides) > 0): ?>
+            <div class="swiper hero-swiper">
+                <div class="swiper-wrapper">
+                    <?php while($slide = mysqli_fetch_assoc($banner_slides)): ?>
+                    <div class="swiper-slide hero-slide">
+                        <img src="uploaded_img/<?php echo htmlspecialchars($slide['image']); ?>" 
+                             alt="<?php echo htmlspecialchars($slide['title']); ?>" 
+                             class="hero-slide-image"
+                             onerror="this.src='assets/images/banner/banner-default.jpg'">
+                        <div class="hero-slide-overlay">
+                            <div class="hero-slide-content">
+                                <?php if(!empty($slide['subtitle'])): ?>
+                                <span class="hero-slide-subtitle"><?php echo htmlspecialchars($slide['subtitle']); ?></span>
+                                <?php endif; ?>
+                                <h2 class="hero-slide-title"><?php echo htmlspecialchars($slide['title']); ?></h2>
+                                <?php if(!empty($slide['description'])): ?>
+                                <p class="hero-slide-desc"><?php echo htmlspecialchars($slide['description']); ?></p>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <?php endwhile; ?>
+                </div>
+            </div>
+            <div class="hero-pagination"></div>
+            <div class="hero-slider-nav">
+                <div class="hero-nav-btn hero-prev"><i class="ri-arrow-left-line"></i></div>
+                <div class="hero-nav-btn hero-next"><i class="ri-arrow-right-line"></i></div>
+            </div>
+            <?php else: ?>
+            <!-- Default Hero if no slides -->
+            <div class="swiper hero-swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide hero-slide">
+                        <img src="assets/images/banner/gallery-hero.jpg" alt="Gallery" class="hero-slide-image" onerror="this.style.background='linear-gradient(135deg, #1a1a1a, #2a2a2a)'">
+                        <div class="hero-slide-overlay">
+                            <div class="hero-slide-content">
+                                <span class="hero-slide-subtitle">RK Studio</span>
+                                <h2 class="hero-slide-title">Our Photo Gallery</h2>
+                                <p class="hero-slide-desc">Explore our collection of stunning photographs capturing life's most precious moments.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php endif; ?>
         </div>
     </section>
 
-    <!-- Gallery Controls -->
-    <div class="gallery-controls">
-        <div class="controls-container">
-            <div class="controls-row">
-                <div class="filter-buttons">
-                    <a href="Gallery.php" class="filter-btn <?php echo $filter == 'all' ? 'active' : ''; ?>">
-                        <i class="ri-apps-line"></i> All
-                    </a>
-                    <a href="Gallery.php?category=wedding" class="filter-btn <?php echo $filter == 'wedding' ? 'active' : ''; ?>">
-                        <i class="ri-heart-line"></i> Wedding
-                    </a>
-                    <a href="Gallery.php?category=portrait" class="filter-btn <?php echo $filter == 'portrait' ? 'active' : ''; ?>">
-                        <i class="ri-user-smile-line"></i> Portrait
-                    </a>
-                    <a href="Gallery.php?category=event" class="filter-btn <?php echo $filter == 'event' ? 'active' : ''; ?>">
-                        <i class="ri-calendar-event-line"></i> Event
-                    </a>
-                    <a href="Gallery.php?category=baby" class="filter-btn <?php echo $filter == 'baby' ? 'active' : ''; ?>">
-                        <i class="ri-emotion-happy-line"></i> Baby
-                    </a>
-                    <a href="Gallery.php?category=drone" class="filter-btn <?php echo $filter == 'drone' ? 'active' : ''; ?>">
-                        <i class="ri-plane-line"></i> Drone
-                    </a>
-                    <a href="#video-section" class="filter-btn">
-                        <i class="ri-video-line"></i> Videos
-                    </a>
-                </div>
-                
-                <div class="search-sort-row">
-                    <div class="results-count">
-                        Showing <span><?php echo $total_count; ?></span> photos
-                    </div>
-                    
-                    <form class="search-box" method="get" action="Gallery.php">
-                        <?php if($filter != 'all'): ?>
-                            <input type="hidden" name="category" value="<?php echo htmlspecialchars($filter); ?>">
-                        <?php endif; ?>
-                        <input type="text" name="search" placeholder="Search photos..." value="<?php echo htmlspecialchars($search); ?>">
-                        <button type="submit"><i class="ri-search-line"></i></button>
-                    </form>
-                    
-                    <select class="sort-select" onchange="window.location.href=this.value">
-                        <option value="Gallery.php?sort=newest<?php echo $filter != 'all' ? '&category='.$filter : ''; ?>" <?php echo $sort == 'newest' ? 'selected' : ''; ?>>Newest First</option>
-                        <option value="Gallery.php?sort=oldest<?php echo $filter != 'all' ? '&category='.$filter : ''; ?>" <?php echo $sort == 'oldest' ? 'selected' : ''; ?>>Oldest First</option>
-                        <option value="Gallery.php?sort=featured<?php echo $filter != 'all' ? '&category='.$filter : ''; ?>" <?php echo $sort == 'featured' ? 'selected' : ''; ?>>Featured First</option>
-                        <option value="Gallery.php?sort=title<?php echo $filter != 'all' ? '&category='.$filter : ''; ?>" <?php echo $sort == 'title' ? 'selected' : ''; ?>>Title A-Z</option>
-                    </select>
-                </div>
+    <!-- Breadcrumb -->
+    <section class="gallery-breadcrumb">
+        <div class="breadcrumb-container">
+            <div class="breadcrumb-nav">
+                <a href="index.php">Home</a>
+                <span><i class="ri-arrow-right-s-line"></i></span>
+                <span>Gallery</span>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Gallery Grid -->
-    <section class="gallery-section">
-        <div class="gallery-container">
-            <div class="gallery-grid">
+    <!-- Photos Section -->
+    <section class="photos-section" id="photos-section">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>Photo <span>Gallery</span></h2>
+                <p>Browse through our stunning collection of professional photography capturing special moments.</p>
+            </div>
+
+            <!-- Filter Controls -->
+            <div class="filter-controls">
+                <a href="Gallery.php" class="filter-btn <?php echo $filter == 'all' ? 'active' : ''; ?>">
+                    <i class="ri-apps-line"></i> All
+                </a>
+                <a href="Gallery.php?category=wedding" class="filter-btn <?php echo $filter == 'wedding' ? 'active' : ''; ?>">
+                    <i class="ri-heart-line"></i> Wedding
+                </a>
+                <a href="Gallery.php?category=portrait" class="filter-btn <?php echo $filter == 'portrait' ? 'active' : ''; ?>">
+                    <i class="ri-user-smile-line"></i> Portrait
+                </a>
+                <a href="Gallery.php?category=event" class="filter-btn <?php echo $filter == 'event' ? 'active' : ''; ?>">
+                    <i class="ri-calendar-event-line"></i> Event
+                </a>
+                <a href="Gallery.php?category=baby" class="filter-btn <?php echo $filter == 'baby' ? 'active' : ''; ?>">
+                    <i class="ri-emotion-happy-line"></i> Baby
+                </a>
+                <a href="Gallery.php?category=drone" class="filter-btn <?php echo $filter == 'drone' ? 'active' : ''; ?>">
+                    <i class="ri-plane-line"></i> Drone
+                </a>
+            </div>
+
+            <!-- Masonry Gallery Grid -->
+            <div class="masonry-gallery">
                 <?php 
                 if($portfolio_items && mysqli_num_rows($portfolio_items) > 0){
                     $index = 0;
                     while($item = mysqli_fetch_assoc($portfolio_items)){
                         $index++;
                         $image_path = 'uploaded_img/' . $item['image'];
-                        $is_featured = $item['featured'] == 1 && $index <= 1;
+                        
+                        // Determine size class for masonry effect
+                        $size_class = '';
+                        if($item['featured'] == 1 && $index <= 2) {
+                            $size_class = 'tall';
+                        } elseif($index % 5 == 0) {
+                            $size_class = 'wide';
+                        } elseif($index % 7 == 0) {
+                            $size_class = 'tall';
+                        }
                 ?>
-                <div class="gallery-item <?php echo $is_featured ? 'featured' : ''; ?>">
-                    <?php if($item['featured']): ?>
-                        <div class="featured-badge">
-                            <i class="ri-star-fill"></i> Featured
-                        </div>
-                    <?php endif; ?>
-                    
+                <div class="gallery-item <?php echo $size_class; ?>">
                     <img src="<?php echo htmlspecialchars($image_path); ?>" 
                          alt="<?php echo htmlspecialchars($item['title']); ?>" 
                          class="gallery-item-image"
                          onerror="this.src='assets/images/portfolio/placeholder.jpg'">
                     
-                    <a href="<?php echo htmlspecialchars($image_path); ?>" class="gallery-item-link popup-image" title="Click to view full image">
-                        <div class="gallery-zoom-icon">
-                            <i class="ri-zoom-in-line"></i>
-                        </div>
+                    <a href="<?php echo htmlspecialchars($image_path); ?>" class="gallery-zoom popup-image">
+                        <i class="ri-zoom-in-line"></i>
                     </a>
                     
                     <div class="gallery-item-overlay">
@@ -1087,7 +1238,7 @@ $total_count = $portfolio_items ? mysqli_num_rows($portfolio_items) : 0;
                             <span class="gallery-item-category"><?php echo htmlspecialchars(ucfirst($item['category'])); ?></span>
                             <h3 class="gallery-item-title"><?php echo htmlspecialchars($item['title']); ?></h3>
                             <?php if(!empty($item['description'])): ?>
-                                <p class="gallery-item-desc"><?php echo htmlspecialchars($item['description']); ?></p>
+                            <p class="gallery-item-desc"><?php echo htmlspecialchars($item['description']); ?></p>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -1102,20 +1253,17 @@ $total_count = $portfolio_items ? mysqli_num_rows($portfolio_items) : 0;
                     </div>
                     <h3>No Photos Found</h3>
                     <?php if(!empty($search)): ?>
-                        <p>No photos match your search "<?php echo htmlspecialchars($search); ?>". Try a different keyword.</p>
-                        <a href="Gallery.php" class="btn-primary">
+                        <p>No photos match your search. Try a different keyword.</p>
+                        <a href="Gallery.php" class="filter-btn active" style="display: inline-block; margin-top: 15px;">
                             <i class="ri-refresh-line"></i> Clear Search
                         </a>
                     <?php elseif($filter != 'all'): ?>
                         <p>No photos in the "<?php echo htmlspecialchars(ucfirst($filter)); ?>" category yet.</p>
-                        <a href="Gallery.php" class="btn-primary">
+                        <a href="Gallery.php" class="filter-btn active" style="display: inline-block; margin-top: 15px;">
                             <i class="ri-apps-line"></i> View All Photos
                         </a>
                     <?php else: ?>
                         <p>Gallery photos will appear here once added by the admin.</p>
-                        <a href="index.php" class="btn-primary">
-                            <i class="ri-home-line"></i> Back to Home
-                        </a>
                     <?php endif; ?>
                 </div>
                 <?php } ?>
@@ -1123,61 +1271,55 @@ $total_count = $portfolio_items ? mysqli_num_rows($portfolio_items) : 0;
         </div>
     </section>
 
-    <!-- Video Section -->
-    <section class="video-section" id="video-section">
-        <div class="gallery-container">
-            <div class="section-header">
-                <h2><i class="ri-video-line"></i> Video <span>Collection</span></h2>
+    <!-- Videos Section -->
+    <section class="videos-section" id="videos-section">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>Video <span>Collection</span></h2>
                 <p>Watch our cinematic highlights capturing your special moments in motion.</p>
             </div>
-            <div class="video-grid">
-                <?php 
-                // Create videos table if not exists
-                $create_videos_table = "CREATE TABLE IF NOT EXISTS videos (
-                    id INT AUTO_INCREMENT PRIMARY KEY,
-                    title VARCHAR(255) NOT NULL,
-                    category VARCHAR(100) NOT NULL,
-                    video_url VARCHAR(500) NOT NULL,
-                    thumbnail VARCHAR(255),
-                    duration VARCHAR(20),
-                    featured TINYINT(1) DEFAULT 0,
-                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                )";
-                @mysqli_query($conn, $create_videos_table);
-                
-                // Fetch videos
-                $videos_query = @mysqli_query($conn, "SELECT * FROM videos ORDER BY featured DESC, created_at DESC");
-                
-                if($videos_query && mysqli_num_rows($videos_query) > 0){
-                    while($video = mysqli_fetch_assoc($videos_query)){
-                        $thumbnail_path = !empty($video['thumbnail']) ? 'uploaded_img/' . $video['thumbnail'] : 'assets/images/portfolio/video-placeholder.jpg';
-                ?>
-                <div class="video-item">
-                    <div class="video-thumbnail">
-                        <img src="<?php echo htmlspecialchars($thumbnail_path); ?>" alt="<?php echo htmlspecialchars($video['title']); ?>" onerror="this.src='assets/images/portfolio/placeholder.jpg'">
-                        <a href="<?php echo htmlspecialchars($video['video_url']); ?>" class="video-play-btn popup-video">
-                            <i class="ri-play-fill"></i>
-                        </a>
-                    </div>
-                    <div class="video-info">
-                        <span class="video-category"><?php echo htmlspecialchars(ucfirst($video['category'])); ?></span>
-                        <h3 class="video-title"><?php echo htmlspecialchars($video['title']); ?></h3>
-                        <?php if(!empty($video['duration'])): ?>
-                            <p class="video-duration"><i class="ri-time-line"></i> <?php echo htmlspecialchars($video['duration']); ?></p>
-                        <?php endif; ?>
+
+            <?php if($videos_query && mysqli_num_rows($videos_query) > 0): ?>
+            <div class="videos-slider-wrapper">
+                <div class="swiper videos-swiper">
+                    <div class="swiper-wrapper">
+                        <?php while($video = mysqli_fetch_assoc($videos_query)): 
+                            $thumbnail_path = !empty($video['thumbnail']) ? 'uploaded_img/' . $video['thumbnail'] : 'assets/images/portfolio/video-placeholder.jpg';
+                        ?>
+                        <div class="swiper-slide video-slide">
+                            <div class="video-thumbnail">
+                                <img src="<?php echo htmlspecialchars($thumbnail_path); ?>" 
+                                     alt="<?php echo htmlspecialchars($video['title']); ?>"
+                                     onerror="this.src='assets/images/portfolio/placeholder.jpg'">
+                                <a href="<?php echo htmlspecialchars($video['video_url']); ?>" class="video-play-btn popup-video">
+                                    <i class="ri-play-fill"></i>
+                                </a>
+                            </div>
+                            <div class="video-info">
+                                <span class="video-category"><?php echo htmlspecialchars(ucfirst($video['category'])); ?></span>
+                                <h3 class="video-title"><?php echo htmlspecialchars($video['title']); ?></h3>
+                                <?php if(!empty($video['description'])): ?>
+                                <p class="video-desc"><?php echo htmlspecialchars($video['description']); ?></p>
+                                <?php endif; ?>
+                                <?php if(!empty($video['duration'])): ?>
+                                <p class="video-duration"><i class="ri-time-line"></i> <?php echo htmlspecialchars($video['duration']); ?></p>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <?php endwhile; ?>
                     </div>
                 </div>
-                <?php 
-                    }
-                } else { 
-                ?>
-                <div class="empty-video-state">
-                    <i class="ri-video-line"></i>
-                    <h3>No Videos Yet</h3>
-                    <p>Video collection coming soon! Check back later for cinematic highlights.</p>
-                </div>
-                <?php } ?>
+                <div class="videos-nav videos-prev"><i class="ri-arrow-left-line"></i></div>
+                <div class="videos-nav videos-next"><i class="ri-arrow-right-line"></i></div>
+                <div class="videos-pagination"></div>
             </div>
+            <?php else: ?>
+            <div class="empty-video-state">
+                <i class="ri-video-line"></i>
+                <h3>No Videos Yet</h3>
+                <p>Video collection coming soon! Check back later for cinematic highlights.</p>
+            </div>
+            <?php endif; ?>
         </div>
     </section>
 
@@ -1215,6 +1357,7 @@ $total_count = $portfolio_items ? mysqli_num_rows($portfolio_items) : 0;
     <script src="assets/js/vendor/jquery-3.7.1.min.js"></script>
     <script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
     <script src="assets/js/vendor/magnific-popup.min.js"></script>
+    <script src="assets/js/plugins/swiper.min.js"></script>
     
     <script>
         // Mobile Menu Toggle
@@ -1230,6 +1373,63 @@ $total_count = $portfolio_items ? mysqli_num_rows($portfolio_items) : 0;
             } else {
                 backToTop.classList.remove('visible');
             }
+        });
+        
+        document.getElementById('backToTop').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Hero Banner Swiper
+        const heroSwiper = new Swiper('.hero-swiper', {
+            loop: true,
+            speed: 1000,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            effect: 'fade',
+            fadeEffect: {
+                crossFade: true
+            },
+            pagination: {
+                el: '.hero-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.hero-next',
+                prevEl: '.hero-prev',
+            },
+        });
+
+        // Videos Swiper
+        const videosSwiper = new Swiper('.videos-swiper', {
+            slidesPerView: 1,
+            spaceBetween: 20,
+            loop: true,
+            speed: 600,
+            pagination: {
+                el: '.videos-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.videos-next',
+                prevEl: '.videos-prev',
+            },
+            breakpoints: {
+                576: {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 25,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                },
+            },
         });
         
         // Image Lightbox
@@ -1254,14 +1454,6 @@ $total_count = $portfolio_items ? mysqli_num_rows($portfolio_items) : 0;
                 },
                 mainClass: 'mfp-fade',
                 removalDelay: 300,
-                callbacks: {
-                    open: function() {
-                        $('body').css('overflow', 'hidden');
-                    },
-                    close: function() {
-                        $('body').css('overflow', '');
-                    }
-                }
             });
             
             // Video Lightbox
@@ -1289,28 +1481,6 @@ $total_count = $portfolio_items ? mysqli_num_rows($portfolio_items) : 0;
                         }
                     }
                 },
-                callbacks: {
-                    open: function() {
-                        $('body').css('overflow', 'hidden');
-                    },
-                    close: function() {
-                        $('body').css('overflow', '');
-                    }
-                }
-            });
-        });
-        
-        // Smooth scroll for back to top
-        document.getElementById('backToTop').addEventListener('click', function(e) {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-        
-        // Smooth scroll for video section link
-        document.querySelectorAll('a[href="#video-section"]').forEach(function(link) {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.getElementById('video-section').scrollIntoView({ behavior: 'smooth' });
             });
         });
     </script>

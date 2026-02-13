@@ -44,6 +44,31 @@ CREATE TABLE IF NOT EXISTS portfolio (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Banner slides for gallery hero slider
+CREATE TABLE IF NOT EXISTS banner_slides (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    subtitle VARCHAR(255),
+    description TEXT,
+    image VARCHAR(255) NOT NULL,
+    display_order INT DEFAULT 0,
+    active TINYINT(1) DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Videos table for video gallery
+CREATE TABLE IF NOT EXISTS videos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    category VARCHAR(100) NOT NULL,
+    video_url VARCHAR(500) NOT NULL,
+    thumbnail VARCHAR(255),
+    duration VARCHAR(20),
+    description TEXT,
+    featured TINYINT(1) DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Create 'studio' database
 CREATE DATABASE IF NOT EXISTS studio;
 USE studio;
