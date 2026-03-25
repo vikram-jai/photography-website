@@ -194,8 +194,11 @@ $create_videos_table = "CREATE TABLE IF NOT EXISTS videos (
 )";
 mysqli_query($conn, $create_videos_table);
 
-// Add description column if it doesn't exist
-@mysqli_query($conn, "ALTER TABLE videos ADD COLUMN description TEXT AFTER duration");
+// Add description column if it doesn't exist (for older DBs with schema lacking this column)
+$column_check = mysqli_query($conn, "SHOW COLUMNS FROM videos LIKE 'description'");
+if($column_check && mysqli_num_rows($column_check) === 0) {
+    mysqli_query($conn, "ALTER TABLE videos ADD COLUMN description TEXT AFTER duration");
+}
 
 // Add video
 if(isset($_POST['add_video'])){

@@ -6,5 +6,6 @@
   },
   "liveServer.settings.root": "/",
   "liveServer.settings.CustomBrowser": "chrome",
-  "liveServer.settings.AdvanceCustomBrowserCmdLine": "chrome --new-window http://localhost/photography-website/index.html"
+  "liveServer.settings.AdvanceCustomBrowserCmdLine": "chrome --new-window http://localhost/photography-website/index.html",
+  "liveServer.settings.port": 5501
 }

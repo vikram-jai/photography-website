@@ -25,7 +25,7 @@ $user_display_name = $is_admin ? $_SESSION['admin_name'] : ($is_user ? $_SESSION
 <!-- Header -->
 <header class="admin-header">
     <div class="container">
-        <a href="<?php echo $is_admin ? 'admin_page.php' : ($is_user ? 'user_page.php' : 'index.html'); ?>" class="admin-logo">
+        <a href="<?php echo $is_admin ? 'admin_page.php' : ($is_user ? 'user_page.php' : 'index.php'); ?>" class="admin-logo">
             <img src="assets/images/logo10.png" alt="RK Studio" onerror="this.style.display='none'">
             <span class="admin-logo-text">RK <span>Studio</span></span>
         </a>

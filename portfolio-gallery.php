@@ -387,7 +387,7 @@ if($categories_query) {
                     <!-- Logo Section -->
                     <div class="rs-header-left">
                         <div class="rs-header-logo">
-                            <a href="index.html">
+                            <a href="index.php">
                                 <img src="assets/images/logo10.png" alt="RK Studio Logo">
                             </a>
                         </div>
@@ -397,7 +397,7 @@ if($categories_query) {
                     <div class="rs-header-menu">
                         <nav id="mobile-menu" class="main-menu">
                             <ul class="onepage-menu">
-                                <li><a href="index.html">Home</a></li>
+                                <li><a href="index.php">Home</a></li>
                                 <li><a href="about.html">About</a></li>
                                 <li><a href="service.html">Services</a></li>
                                 <li><a href="portfolio-gallery.php" class="active">Portfolio</a></li>
@@ -512,7 +512,7 @@ if($categories_query) {
                 <!-- About Column -->
                 <div class="col-lg-4 col-md-6">
                     <div class="footer-widget">
-                        <a href="index.html" class="d-block mb-4">
+                        <a href="index.php" class="d-block mb-4">
                             <img src="assets/images/logo10.png" alt="RK Studio Logo" style="max-height: 60px;">
                         </a>
                         <p style="color: var(--text-muted); margin-bottom: 20px; line-height: 1.8;">RK Studio has 15 years of experience in capturing timeless moments. We combine creativity, professionalism, and passion to deliver stunning photographs.</p>
@@ -530,7 +530,7 @@ if($categories_query) {
                     <div class="footer-widget">
                         <h5>Quick Links</h5>
                         <ul class="footer-links">
-                            <li><a href="index.html"><i class="ri-arrow-right-s-line"></i> Home</a></li>
+                            <li><a href="index.php"><i class="ri-arrow-right-s-line"></i> Home</a></li>
                             <li><a href="about.html"><i class="ri-arrow-right-s-line"></i> About Us</a></li>
                             <li><a href="service.html"><i class="ri-arrow-right-s-line"></i> Services</a></li>
                             <li><a href="portfolio-gallery.php"><i class="ri-arrow-right-s-line"></i> Portfolio</a></li>
@@ -587,7 +587,7 @@ if($categories_query) {
             
             <!-- Footer Bottom -->
             <div class="footer-bottom" style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 3rem; padding-top: 2rem; text-align: center;">
-                <p style="color: var(--text-muted);">&copy; 2026 <a href="index.html" style="color: var(--gold);">RK Studio</a>. All Rights Reserved.</p>
+                <p style="color: var(--text-muted);">&copy; 2026 <a href="index.php" style="color: var(--gold);">RK Studio</a>. All Rights Reserved.</p>
             </div>
         </div>
     </footer>
