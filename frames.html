@@ -2,53 +2,401 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Frames</title>
-    <link rel="stylesheet" href="style2.css">
+    <title>Frames - RK Studio</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Admin Theme -->
+    <link rel="stylesheet" href="admin-theme.css">
+    <style>
+        .shop-banner {
+            background: linear-gradient(135deg, var(--primary-gold) 0%, var(--primary-gold-dark) 100%);
+            padding: 1.5rem 2rem;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .shop-banner-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .shop-banner-icon {
+            font-size: 2.5rem;
+            color: var(--bg-dark);
+        }
+        .shop-banner-text h3 {
+            color: var(--bg-dark);
+            font-size: 1.3rem;
+            margin-bottom: 0.25rem;
+        }
+        .shop-banner-text p {
+            color: rgba(0,0,0,0.7);
+            font-size: 0.95rem;
+        }
+        .shop-banner-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-dark);
+            color: var(--primary-gold);
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .shop-banner-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        .frame-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+        .frame-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+        .frame-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary-gold);
+        }
+        .frame-image {
+            width: 100%;
+            height: 280px;
+            object-fit: contain;
+            background: var(--bg-darker);
+            padding: 1rem;
+        }
+        .frame-content {
+            padding: 1.5rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+        .frame-title {
+            color: var(--text-white);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .frame-description {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        .visit-shop-note {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        .visit-shop-note i {
+            color: var(--primary-gold);
+        }
+        .price-table {
+            background: var(--bg-card);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+        .price-table-header {
+            background: linear-gradient(135deg, var(--primary-gold) 0%, var(--primary-gold-dark) 100%);
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .price-table-header h3 {
+            color: var(--bg-dark);
+            font-size: 1.5rem;
+            margin: 0;
+        }
+        .price-table-header p {
+            color: rgba(0,0,0,0.7);
+            margin: 0.5rem 0 0;
+        }
+        .price-table-body {
+            padding: 1.5rem;
+        }
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+        .price-row:nth-child(odd) {
+            background: var(--bg-darker);
+        }
+        .price-row:hover {
+            background: rgba(212, 168, 75, 0.1);
+        }
+        .price-size {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+        .price-value {
+            color: var(--primary-gold);
+            font-weight: 700;
+        }
+        .frame-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .frame-type-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+        .frame-type-card:hover {
+            border-color: var(--primary-gold);
+            transform: translateY(-3px);
+        }
+        .frame-type-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-gold) 0%, var(--primary-gold-dark) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            color: var(--bg-dark);
+        }
+        .frame-type-title {
+            color: var(--text-white);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .frame-type-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
 
-    <header>
-        <h1>FRAMES</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="gifts.html">Gifts</a></li>
-                <li><a href="frames.html">Frames</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
+<!-- Header -->
+<header class="admin-header">
+    <div class="container">
+        <a href="index.php" class="admin-logo">
+            <img src="assets/images/logo10.png" alt="RK Studio" onerror="this.style.display='none'">
+            <span class="admin-logo-text">RK <span>Studio</span></span>
+        </a>
+        <nav class="admin-nav">
+            <a href="index.php"><i class="fas fa-home"></i> Home</a>
+            <a href="Gallery.php"><i class="fas fa-images"></i> Gallery</a>
+            <a href="gifts.html"><i class="fas fa-gift"></i> Gifts</a>
+            <a href="frames.html" class="active"><i class="fas fa-image"></i> Frames</a>
+            <a href="order.html"><i class="fas fa-camera"></i> Book Shoot</a>
+            <a href="login_form.php"><i class="fas fa-sign-in-alt"></i> Login</a>
         </nav>
-    </header>
+    </div>
+</header>
 
-    <section class="products">
-        <div class="product">
-            <img src="assets/images/frame5.jpg" alt="Gift Item">
+<!-- Main Content -->
+<div class="admin-container">
+    
+    <!-- Page Title -->
+    <div class="page-title">
+        <h1><i class="fas fa-image"></i> Photo <span>Frames</span></h1>
+        <p>Premium quality frames to display your precious memories</p>
+    </div>
+
+    <!-- Shop Visit Banner -->
+    <div class="shop-banner">
+        <div class="shop-banner-content">
+            <i class="fas fa-store shop-banner-icon"></i>
+            <div class="shop-banner-text">
+                <h3>Visit Our Studio to Purchase</h3>
+                <p>All frames are available at our studio. Contact us or visit in person!</p>
+            </div>
         </div>
-        
-        <div class="product">
-            <img src="assets/images/frame6.jpg" alt="Photo Frame">
+        <a href="https://wa.me/919894596141?text=Hi%20RK%20Studio!%20I'm%20interested%20in%20purchasing%20photo%20frames." target="_blank" class="shop-banner-btn">
+            <i class="fab fa-whatsapp"></i> Contact on WhatsApp
+        </a>
+    </div>
+
+    <!-- Frame Types -->
+    <div class="frame-types">
+        <div class="frame-type-card">
+            <div class="frame-type-icon">
+                <i class="fas fa-tree"></i>
+            </div>
+            <h3 class="frame-type-title">Wooden Frames</h3>
+            <p class="frame-type-desc">Classic wooden frames with various finishes</p>
+        </div>
+        <div class="frame-type-card">
+            <div class="frame-type-icon">
+                <i class="fas fa-gem"></i>
+            </div>
+            <h3 class="frame-type-title">Glass Frames</h3>
+            <p class="frame-type-desc">Elegant glass frames for modern interiors</p>
+        </div>
+        <div class="frame-type-card">
+            <div class="frame-type-icon">
+                <i class="fas fa-th-large"></i>
+            </div>
+            <h3 class="frame-type-title">Collage Frames</h3>
+            <p class="frame-type-desc">Multi-photo frames for your memories</p>
+        </div>
+        <div class="frame-type-card">
+            <div class="frame-type-icon">
+                <i class="fas fa-crown"></i>
+            </div>
+            <h3 class="frame-type-title">Designer Frames</h3>
+            <p class="frame-type-desc">Premium designer frames for special occasions</p>
+        </div>
+    </div>
+
+    <!-- Price Table -->
+    <div class="price-table">
+        <div class="price-table-header">
+            <h3><i class="fas fa-tags"></i> Frame Price List</h3>
+            <p>Prices may vary based on frame material and design</p>
+        </div>
+        <div class="price-table-body">
+            <div class="price-row">
+                <span class="price-size"><i class="fas fa-ruler-combined"></i> 4 × 6 inches</span>
+                <span class="price-value">₹175/-</span>
+            </div>
+            <div class="price-row">
+                <span class="price-size"><i class="fas fa-ruler-combined"></i> 6 × 8 inches</span>
+                <span class="price-value">₹210/-</span>
+            </div>
+            <div class="price-row">
+                <span class="price-size"><i class="fas fa-ruler-combined"></i> 8 × 12 inches</span>
+                <span class="price-value">₹550/-</span>
+            </div>
+            <div class="price-row">
+                <span class="price-size"><i class="fas fa-ruler-combined"></i> 10 × 15 inches</span>
+                <span class="price-value">₹700/-</span>
+            </div>
+            <div class="price-row">
+                <span class="price-size"><i class="fas fa-ruler-combined"></i> 12 × 18 inches</span>
+                <span class="price-value">₹900/-</span>
+            </div>
+            <div class="price-row">
+                <span class="price-size"><i class="fas fa-ruler-combined"></i> 16 × 24 inches</span>
+                <span class="price-value">₹2,250/-</span>
+            </div>
+            <div class="price-row">
+                <span class="price-size"><i class="fas fa-ruler-combined"></i> 30 × 40 inches</span>
+                <span class="price-value">₹4,500/-</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Frames Gallery -->
+    <div class="page-title">
+        <h1><i class="fas fa-images"></i> Frame <span>Designs</span></h1>
+        <p>Browse our collection of beautiful frame designs</p>
+    </div>
+
+    <div class="frame-grid">
+        <div class="frame-card">
+            <img src="assets/images/frame5.jpg" alt="Price List Frame" class="frame-image">
+            <div class="frame-content">
+                <h3 class="frame-title">Multiple Size Options</h3>
+                <p class="frame-description">Available in various sizes to fit your needs</p>
+                <p class="visit-shop-note"><i class="fas fa-store"></i> Visit shop to purchase</p>
+            </div>
         </div>
 
-        <div class="product">
-            <img src="assets/images/frame3.jpg" alt="Gift Item">
-        </div>
-        
-        <div class="product">
-            <img src="assets/images/frame4.jpg" alt="Photo Frame">
-        </div>
-
-        <div class="product">
-            <img src="assets/images/frame1.jpg" alt="Gift Item">
-        </div>
-        
-        <div class="product">
-            <img src="assets/images/frame2.jpg" alt="Photo Frame">
+        <div class="frame-card">
+            <img src="assets/images/frame6.jpg" alt="Wall Gallery Frame" class="frame-image">
+            <div class="frame-content">
+                <h3 class="frame-title">Wall Gallery Set</h3>
+                <p class="frame-description">Create a stunning gallery wall display</p>
+                <p class="visit-shop-note"><i class="fas fa-store"></i> Visit shop to purchase</p>
+            </div>
         </div>
 
+        <div class="frame-card">
+            <img src="assets/images/frame3.jpg" alt="Family Collage Frame" class="frame-image">
+            <div class="frame-content">
+                <h3 class="frame-title">Family Collage Frame</h3>
+                <p class="frame-description">Display multiple family photos together</p>
+                <p class="visit-shop-note"><i class="fas fa-store"></i> Visit shop to purchase</p>
+            </div>
+        </div>
 
+        <div class="frame-card">
+            <img src="assets/images/frame4.jpg" alt="Classic Gold Frame" class="frame-image">
+            <div class="frame-content">
+                <h3 class="frame-title">Classic Gold Frame</h3>
+                <p class="frame-description">Elegant gold-finished designer frame</p>
+                <p class="visit-shop-note"><i class="fas fa-store"></i> Visit shop to purchase</p>
+            </div>
+        </div>
 
-    </section>
+        <div class="frame-card">
+            <img src="assets/images/frame1.jpg" alt="Decorative Frame" class="frame-image">
+            <div class="frame-content">
+                <h3 class="frame-title">Decorative Frame</h3>
+                <p class="frame-description">Beautiful decorative frame for special photos</p>
+                <p class="visit-shop-note"><i class="fas fa-store"></i> Visit shop to purchase</p>
+            </div>
+        </div>
 
+        <div class="frame-card">
+            <img src="assets/images/frame2.jpg" alt="Ornate Designer Frame" class="frame-image">
+            <div class="frame-content">
+                <h3 class="frame-title">Ornate Designer Frame</h3>
+                <p class="frame-description">Premium ornate frame for elegant display</p>
+                <p class="visit-shop-note"><i class="fas fa-store"></i> Visit shop to purchase</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div style="margin-top: 3rem;">
+        <div class="admin-form-card" style="max-width: 700px;">
+            <h2 style="text-align: center; color: var(--text-white); margin-bottom: 1.5rem;">
+                <i class="fas fa-map-marker-alt" style="color: var(--primary-gold);"></i> Visit Our Studio
+            </h2>
+            <div class="booking-info" style="gap: 15px;">
+                <div class="booking-info-item">
+                    <i class="fas fa-location-dot"></i>
+                    <span><strong>Address:</strong> Therkuvasal, Madurai, Tamil Nadu, India</span>
+                </div>
+                <div class="booking-info-item">
+                    <i class="fas fa-phone"></i>
+                    <span><strong>Phone:</strong> <a href="tel:+919894596141" style="color: var(--primary-gold);">+91 98945 96141</a></span>
+                </div>
+                <div class="booking-info-item">
+                    <i class="fas fa-clock"></i>
+                    <span><strong>Hours:</strong> Mon - Sat: 9:00 AM - 8:00 PM</span>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 1.5rem;">
+                <a href="https://wa.me/919894596141?text=Hi%20RK%20Studio!%20I%20want%20to%20visit%20your%20shop%20to%20purchase%20frames." target="_blank" class="btn-primary">
+                    <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
 
 </body>
 </html>

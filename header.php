@@ -7,7 +7,7 @@
       <nav class="navbar">
          <a href="admin.php">add photos</a>
          <a href="products.php">view photo</a>
-         <a href="index.html">Home</a>
+         <a href="index.php">Home</a>
          <a href="admin_page.php">Login></a>
 
       </nav>

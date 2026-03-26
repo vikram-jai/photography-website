@@ -1,93 +1,367 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gifts</title>
-    <link rel="stylesheet" href="style2.css">
+    <title>Gifts - RK Studio</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Admin Theme -->
+    <link rel="stylesheet" href="admin-theme.css">
+    <style>
+        .shop-banner {
+            background: linear-gradient(135deg, var(--primary-gold) 0%, var(--primary-gold-dark) 100%);
+            padding: 1.5rem 2rem;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .shop-banner-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .shop-banner-icon {
+            font-size: 2.5rem;
+            color: var(--bg-dark);
+        }
+        .shop-banner-text h3 {
+            color: var(--bg-dark);
+            font-size: 1.3rem;
+            margin-bottom: 0.25rem;
+        }
+        .shop-banner-text p {
+            color: rgba(0,0,0,0.7);
+            font-size: 0.95rem;
+        }
+        .shop-banner-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-dark);
+            color: var(--primary-gold);
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .shop-banner-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .product-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary-gold);
+        }
+        .product-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            background: var(--bg-darker);
+        }
+        .product-content {
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .product-title {
+            color: var(--text-white);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .product-price {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-gold) 0%, var(--primary-gold-dark) 100%);
+            color: var(--bg-dark);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--primary-gold);
+            color: var(--bg-dark);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .product-card-wrapper {
+            position: relative;
+        }
+        .visit-shop-note {
+            text-align: center;
+            padding: 1rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        .visit-shop-note i {
+            color: var(--primary-gold);
+        }
+        .category-tabs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        .category-tab {
+            padding: 10px 25px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .category-tab:hover, .category-tab.active {
+            background: var(--primary-gold);
+            color: var(--bg-dark);
+            border-color: var(--primary-gold);
+        }
+    </style>
 </head>
 <body>
 
-    <header>
-        <h1>GIFTS</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="gifts.html">Gifts</a></li>
-                <li><a href="frames.html">Frames</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
+<!-- Header -->
+<header class="admin-header">
+    <div class="container">
+        <a href="index.php" class="admin-logo">
+            <img src="assets/images/logo10.png" alt="RK Studio" onerror="this.style.display='none'">
+            <span class="admin-logo-text">RK <span>Studio</span></span>
+        </a>
+        <nav class="admin-nav">
+            <a href="index.php"><i class="fas fa-home"></i> Home</a>
+            <a href="Gallery.php"><i class="fas fa-images"></i> Gallery</a>
+            <a href="gifts.html" class="active"><i class="fas fa-gift"></i> Gifts</a>
+            <a href="frames.html"><i class="fas fa-image"></i> Frames</a>
+            <a href="order.html"><i class="fas fa-camera"></i> Book Shoot</a>
+            <a href="login_form.php"><i class="fas fa-sign-in-alt"></i> Login</a>
         </nav>
-    </header>
+    </div>
+</header>
 
-    <section class="products">
-        <div class="product">
-            <img src="assets/images/gift1.jpg" alt="Gift Item">
-            <h2>Mug image Print </h2>
-            <p>350 rupees</p>
+<!-- Main Content -->
+<div class="admin-container">
+    
+    <!-- Page Title -->
+    <div class="page-title">
+        <h1><i class="fas fa-gift"></i> Photo <span>Gifts</span></h1>
+        <p>Beautiful personalized gifts to treasure your memories</p>
+    </div>
+
+    <!-- Shop Visit Banner -->
+    <div class="shop-banner">
+        <div class="shop-banner-content">
+            <i class="fas fa-store shop-banner-icon"></i>
+            <div class="shop-banner-text">
+                <h3>Visit Our Studio to Purchase</h3>
+                <p>All gifts are available at our studio. Contact us or visit in person!</p>
+            </div>
         </div>
-        
-        <div class="product">
-            <img src="assets/images/gift2.jpg" alt="Photo Frame">
-            <h2>Mug text Print  Gift</h2>
-            <p>300 rupees</p>
+        <a href="https://wa.me/919894596141?text=Hi%20RK%20Studio!%20I'm%20interested%20in%20purchasing%20photo%20gifts." target="_blank" class="shop-banner-btn">
+            <i class="fab fa-whatsapp"></i> Contact on WhatsApp
+        </a>
+    </div>
+
+    <!-- Category Tabs -->
+    <div class="category-tabs">
+        <a href="#" class="category-tab active">All Gifts</a>
+        <a href="#" class="category-tab">Mugs</a>
+        <a href="#" class="category-tab">T-Shirts</a>
+        <a href="#" class="category-tab">Frames</a>
+        <a href="#" class="category-tab">Keychains</a>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="product-grid">
+        <div class="product-card">
+            <div class="product-card-wrapper">
+                <img src="assets/images/gift1.jpg" alt="Mug Image Print" class="product-image">
+            </div>
+            <div class="product-content">
+                <h3 class="product-title">Mug Image Print</h3>
+                <span class="product-price">₹350</span>
+                <p class="visit-shop-note"><i class="fas fa-store"></i> Visit shop to purchase</p>
+            </div>
         </div>
 
-        <div class="product">
-            <img src="assets/images/gift3.jpg" alt="Gift Item">
-            <h2>Text printed T-shirt  </h2>
-            <p>500 rupees</p>
-        </div>
-        
-        <div class="product">
-            <img src="assets/images/gift4.jpg" alt="Photo Frame">
-            <h2>Image printed T-shirt </h2>
-            <p>650 rupees</p>
-        </div>
-
-        <div class="product">
-            <img src="assets/images/gift5.jpg" alt="Gift Item">
-            <h2>Glass frame</h2>
-            <p>1200 rupees</p>
+        <div class="product-card">
+            <div class="product-card-wrapper">
+                <img src="assets/images/gift2.jpg" alt="Mug Text Print Gift" class="product-image">
+            </div>
+            <div class="product-content">
+                <h3 class="product-title">Mug Text Print Gift</h3>
+                <span class="product-price">₹300</span>
+                <p class="visit-shop-note"><i class="fas fa-store"></i> Visit shop to purchase</p>
+            </div>
         </div>
 
-        <div class="product">
-            <img src="assets/images/gift6.jpg" alt="Photo Frame">
-            <h2>Wooden Frame</h2>
-            <p>800 rupees</p>
+        <div class="product-card">
+            <div class="product-card-wrapper">
+                <img src="assets/images/gift3.jpg" alt="Text Printed T-shirt" class="product-image">
+            </div>
+            <div class="product-content">
+                <h3 class="product-title">Text Printed T-shirt</h3>
+                <span class="product-price">₹500</span>
+                <p class="visit-shop-note"><i class="fas fa-store"></i> Visit shop to purchase</p>
+            </div>
         </div>
-        <div class="product">
-            <img src="assets/images/gift7.jpg" alt="Photo Frame">
-            <h2>Wooden Frame</h2>
-            <p>750 rupees</p>
-        </div>
-        <div class="product">
-            <img src="assets/images/gift8.jpg" alt="Photo Frame">
-            <h2>Wooden keychains</h2>
-            <p>120 rupees</p>
-        </div>
-        <div class="product">
-            <img src="assets/images/gift9.jpg" alt="Photo Frame">
-            <h2>Glass keychains</h2>
-            <p>180 rupees</p>
-        </div>
-        <div class="product">
-            <img src="assets/images/gift10.jpg" alt="Photo Frame">
-            <h2>Cube Frame</h2>
-            <p>450 rupees</p>
-        </div>
-        <div class="product">
-            <img src="assets/images/gift11.jpg" alt="Photo Frame">
-            <h2>Photo frame</h2>
-            <p>650 rupees</p>
-        </div>
-        <div class="product">
-            <img src="assets/images/gift12.jpg" alt="Photo Frame">
-            <h2>Wooden collage Frame</h2>
-            <p>950 rupees</p>
-        </div>
-    </section>
 
+        <div class="product-card">
+            <div class="product-card-wrapper">
+                <img src="assets/images/gift4.jpg" alt="Image Printed T-shirt" class="product-image">
+            </div>
+            <div class="product-content">
+                <h3 class="product-title">Image Printed T-shirt</h3>
+                <span class="product-price">₹650</span>
+                <p class="visit-shop-note"><i class="fas fa-store"></i> Visit shop to purchase</p>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-card-wrapper">
+                <img src="assets/images/gift5.jpg" alt="Glass Frame" class="product-image">
+            </div>
+            <div class="product-content">
+                <h3 class="product-title">Glass Frame</h3>
+                <span class="product-price">₹1,200</span>
+                <p class="visit-shop-note"><i class="fas fa-store"></i> Visit shop to purchase</p>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-card-wrapper">
+                <img src="assets/images/gift6.jpg" alt="Wooden Frame" class="product-image">
+            </div>
+            <div class="product-content">
+                <h3 class="product-title">Wooden Frame</h3>
+                <span class="product-price">₹800</span>
+                <p class="visit-shop-note"><i class="fas fa-store"></i> Visit shop to purchase</p>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-card-wrapper">
+                <img src="assets/images/gift7.jpg" alt="Wooden Frame" class="product-image">
+            </div>
+            <div class="product-content">
+                <h3 class="product-title">Wooden Frame</h3>
+                <span class="product-price">₹750</span>
+                <p class="visit-shop-note"><i class="fas fa-store"></i> Visit shop to purchase</p>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-card-wrapper">
+                <img src="assets/images/gift8.jpg" alt="Wooden Keychains" class="product-image">
+            </div>
+            <div class="product-content">
+                <h3 class="product-title">Wooden Keychains</h3>
+                <span class="product-price">₹120</span>
+                <p class="visit-shop-note"><i class="fas fa-store"></i> Visit shop to purchase</p>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-card-wrapper">
+                <img src="assets/images/gift9.jpg" alt="Glass Keychains" class="product-image">
+            </div>
+            <div class="product-content">
+                <h3 class="product-title">Glass Keychains</h3>
+                <span class="product-price">₹180</span>
+                <p class="visit-shop-note"><i class="fas fa-store"></i> Visit shop to purchase</p>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-card-wrapper">
+                <img src="assets/images/gift10.jpg" alt="Cube Frame" class="product-image">
+            </div>
+            <div class="product-content">
+                <h3 class="product-title">Cube Frame</h3>
+                <span class="product-price">₹450</span>
+                <p class="visit-shop-note"><i class="fas fa-store"></i> Visit shop to purchase</p>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-card-wrapper">
+                <img src="assets/images/gift11.jpg" alt="Photo Frame" class="product-image">
+            </div>
+            <div class="product-content">
+                <h3 class="product-title">Photo Frame</h3>
+                <span class="product-price">₹650</span>
+                <p class="visit-shop-note"><i class="fas fa-store"></i> Visit shop to purchase</p>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-card-wrapper">
+                <img src="assets/images/gift12.jpg" alt="Wooden Collage Frame" class="product-image">
+            </div>
+            <div class="product-content">
+                <h3 class="product-title">Wooden Collage Frame</h3>
+                <span class="product-price">₹950</span>
+                <p class="visit-shop-note"><i class="fas fa-store"></i> Visit shop to purchase</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div style="margin-top: 3rem;">
+        <div class="admin-form-card" style="max-width: 700px;">
+            <h2 style="text-align: center; color: var(--text-white); margin-bottom: 1.5rem;">
+                <i class="fas fa-map-marker-alt" style="color: var(--primary-gold);"></i> Visit Our Studio
+            </h2>
+            <div class="booking-info" style="gap: 15px;">
+                <div class="booking-info-item">
+                    <i class="fas fa-location-dot"></i>
+                    <span><strong>Address:</strong> Therkuvasal, Madurai, Tamil Nadu, India</span>
+                </div>
+                <div class="booking-info-item">
+                    <i class="fas fa-phone"></i>
+                    <span><strong>Phone:</strong> <a href="tel:+919894596141" style="color: var(--primary-gold);">+91 98945 96141</a></span>
+                </div>
+                <div class="booking-info-item">
+                    <i class="fas fa-clock"></i>
+                    <span><strong>Hours:</strong> Mon - Sat: 9:00 AM - 8:00 PM</span>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 1.5rem;">
+                <a href="https://wa.me/919894596141?text=Hi%20RK%20Studio!%20I%20want%20to%20visit%20your%20shop%20to%20purchase%20gifts." target="_blank" class="btn-primary">
+                    <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
 
 </body>
 </html>

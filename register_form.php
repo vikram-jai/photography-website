@@ -1,6 +1,6 @@
 <?php
 
-@include 'db.php';
+@include 'config.php';
 
 if(isset($_POST['submit'])){
 
@@ -16,12 +16,12 @@ if(isset($_POST['submit'])){
 
    if(mysqli_num_rows($result) > 0){
 
-      $error[] = 'user already exist!';
+      $error[] = 'User already exists!';
 
    }else{
 
       if($pass != $cpass){
-         $error[] = 'password not matched!';
+         $error[] = 'Passwords do not match!';
       }else{
          $insert = "INSERT INTO form(name, email, password, user_type) VALUES('$name','$email','$pass','$user_type')";
          mysqli_query($conn, $insert);
@@ -37,40 +37,189 @@ if(isset($_POST['submit'])){
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>register form</title>
-
-   <!-- custom css file link  -->
-   <link rel="stylesheet" href="login.css">
-
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - RK Studio</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Admin Theme -->
+    <link rel="stylesheet" href="admin-theme.css">
+    <style>
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .auth-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 3rem;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+        .auth-logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .auth-logo img {
+            height: 60px;
+            margin-bottom: 1rem;
+        }
+        .auth-logo h1 {
+            font-size: 1.8rem;
+            color: var(--text-white);
+        }
+        .auth-logo h1 span {
+            color: var(--primary-gold);
+        }
+        .auth-title {
+            text-align: center;
+            color: var(--text-white);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        .auth-title span {
+            color: var(--primary-gold);
+        }
+        .auth-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--text-muted);
+        }
+        .auth-footer a {
+            color: var(--primary-gold);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+        .error-msg {
+            background: rgba(220, 53, 69, 0.15);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: block;
+            text-align: center;
+        }
+        .password-wrapper {
+            position: relative;
+        }
+        .password-wrapper .form-control {
+            padding-right: 50px;
+        }
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 5px;
+            transition: color 0.3s ease;
+        }
+        .password-toggle:hover {
+            color: var(--primary-gold);
+        }
+        .form-control-select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            background: var(--bg-darker);
+            color: var(--text-white);
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .form-control-select:focus {
+            outline: none;
+            border-color: var(--primary-gold);
+        }
+    </style>
 </head>
 <body>
-   
-<div class="form-container">
 
-   <form action="" method="post">
-      <h3>register now</h3>
-      <?php
-      if(isset($error)){
-         foreach($error as $error){
-            echo '<span class="error-msg">'.$error.'</span>';
-         };
-      };
-      ?>
-      <input type="text" name="name" required placeholder="enter your name">
-      <input type="email" name="email" required placeholder="enter your email">
-      <input type="password" name="password" required placeholder="enter your password">
-      <input type="password" name="cpassword" required placeholder="confirm your password">
-      <select name="user_type">
-         <option value="user">user</option>
-      </select>
-      <input type="submit" name="submit" value="register now" class="form-btn">
-      <p>already have an account? <a href="login_form.php">login now</a></p>
-   </form>
-
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-logo">
+            <img src="assets/images/logo10.png" alt="RK Studio" onerror="this.style.display='none'">
+            <h1>RK <span>Studio</span></h1>
+        </div>
+        <h2 class="auth-title"><i class="fas fa-user-plus"></i> Register <span>Now</span></h2>
+        
+        <?php
+        if(isset($error)){
+            foreach($error as $err){
+                echo '<span class="error-msg"><i class="fas fa-exclamation-circle"></i> '.$err.'</span>';
+            };
+        };
+        ?>
+        
+        <form action="" method="post">
+            <div class="form-group">
+                <label for="name"><i class="fas fa-user"></i> Full Name</label>
+                <input type="text" name="name" id="name" class="form-control" placeholder="Enter your full name" required>
+            </div>
+            <div class="form-group">
+                <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
+                <input type="email" name="email" id="email" class="form-control" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="password"><i class="fas fa-lock"></i> Password</label>
+                <div class="password-wrapper">
+                    <input type="password" name="password" id="password" class="form-control" placeholder="Enter your password" required>
+                    <button type="button" class="password-toggle" onclick="togglePassword('password', this)">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cpassword"><i class="fas fa-lock"></i> Confirm Password</label>
+                <div class="password-wrapper">
+                    <input type="password" name="cpassword" id="cpassword" class="form-control" placeholder="Confirm your password" required>
+                    <button type="button" class="password-toggle" onclick="togglePassword('cpassword', this)">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+            <input type="hidden" name="user_type" value="user">
+            <button type="submit" name="submit" class="btn-primary btn-block">
+                <i class="fas fa-user-plus"></i> Register Now
+            </button>
+        </form>
+        
+        <p class="auth-footer">Already have an account? <a href="login_form.php">Login Now</a></p>
+        <p class="auth-footer" style="margin-top: 0.5rem;"><a href="index.php"><i class="fas fa-home"></i> Back to Home</a></p>
+    </div>
 </div>
+
+<script>
+function togglePassword(inputId, button) {
+    const input = document.getElementById(inputId);
+    const icon = button.querySelector('i');
+    
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    }
+}
+</script>
 
 </body>
 </html>

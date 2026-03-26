@@ -1,0 +1,20 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Open in XAMPP",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost/photography-website/index.html",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
+      "name": "Open in Browser (XAMPP)",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "start", "http://localhost/photography-website/index.html"],
+      "console": "none"
+    }
+  ]
+}
